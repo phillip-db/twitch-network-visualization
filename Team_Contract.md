@@ -13,9 +13,10 @@
 1. Work Distribution: Each week, the necessary deliverables for the week will be determined by the full team and each member will volunteer to work on one or more deliverables. When no one volunteers, two team members will be randomly assigned to work on the task as a paired-programming team. If this leads to an unbalanced workload for the week, adjustments can be made on a case by case basis. 
 
 2. Time Commitment: To ensure an equal distribution of work, each member is expected to independently work no less than two and no more than six hours per week on the project. If a deliverable ends up taking more time, the rest of the team should be pulled in to assist with the unforeseen complication, with each member taking an equal share of the workload or programming in pairs. It is the team’s responsibility, not the individual’s responsibility, to make sure a weekly deliverable is finished by the end of the week. 
-
 However if a team member is habitually not completing their tasks, they may be asked – politely – to explain their circumstances. Based on their explanation further actions, such as alerting a staff member, may be taken on a case by case basis decided by the other team members. 
+
 3. Conflict Resolution: All conflicts within the team will be decided by a vote and coinflip in the case of a tie.
 If this was an MD file, each of us would sign our names here at the bottom with an electronic signature and a separate github commit over the same document. 
 
 Phillip Burleigh
+Charlie Wang
