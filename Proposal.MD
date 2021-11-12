@@ -2,7 +2,9 @@
 ## Project Proposal (cywang3-spate562-jmatz-pburle2)
 
 ### Leading Question
-Using our dataset, we will implement a method that will recommend a user to different Twitch streamers based on their preferences (streamer partnership and profanity level) and current following. This would allow users to discover more streamers they would enjoy watching. We would also have a method that provides users with information on how two streamers are connected through a series of mutually following streamers on the shortest path.
+One of our goals for the final project is to visualize connections between Twitch streamers. Using a force-directed graph algorithm, we will assign weights to nodes and edges and generate a visually appealing graph that highlights the biggest and most connected streamers. More popular, connected streamers will be at the center of the graph while the less popular, connected streamers will be at the edges.
+
+We would also have a method that provides users with information on how two streamers are connected through a series of mutually following streamers on the shortest path, using Djiktra’s Shortest path. This would allow a user to see if any two given streamers have a connection and belong in the same “network.”
 
 ### Dataset Acquisition and Processing: 
 The dataset we’ve chosen is Twitch Games Social Network from Stanford data sets. The nodes represent Twitch users and the edges represent mutual follower relationships between the Twitch users. 
@@ -16,15 +18,16 @@ Because we intend to implement finding the shortest path, we would utilize a Bre
 1. Shortest Path algorithm
 * Dijkstra’s algorithm (Est. time complexity - O(V^2))
 * Be able to figure out the shortest link between two specified twitch users
+* We will weight our edges by comparing the “ages” of both users, the lower the difference between ages equates to a greater edge weight
 2. Visual Representation of the Data
 * Draw a graph with node size dependent on user views
 * Allows users to visualize the network and data
-* We are unable to accurately predict time complexity for the creation of visual representation
+* To do this we are going to use a force-directed graph, with edges weighted by the difference in age between two channels
+* The running time for this generating this graph will be O(n3)
 
 Three deliverables
-1. Visualization of the dataset(graph)
-2. Command-line “command” that output the five most recommended users and their respective followers given an input of a username
-3. Command-line “command” that outputs the shortest path given an input of two usernames.
+1. Visualization of the dataset(force-directed graph)
+3. Command-line “command” that outputs the shortest path given an input of two usernames
 
 ### Timeline: 
 1. By: 11/12 at the beginning of our weekly meeting(~2:00pm)
