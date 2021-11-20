@@ -7,7 +7,7 @@ class Streamer {
  public:
   Streamer();
   Streamer(unsigned id, std::string name, unsigned views, unsigned age,
-           vector<unsigned> friends);
+           std::vector<unsigned> friends);
 
   unsigned getId() const;
   std::string getName() const;
