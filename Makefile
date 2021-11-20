@@ -1,10 +1,10 @@
 CXX = clang++
 
-main.o: main.cpp
-	$(CXX) -c main.cpp
-
 main: main.o
 	$(CXX) main.o -o main
+
+main.o: main.cpp
+	$(CXX) -c main.cpp
 
 catch.o: catch/catchmain.cpp
 	$(CXX) -c catch/catchmain.cpp -o catch.o
