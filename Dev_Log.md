@@ -26,3 +26,21 @@
 
 * Create wrapper class in C++
     * Read CSVs and create Streamer objects
+
+
+### Week of Nov 20 (jamatz2)
+* Completed parsing of initial dataset into readable format(CSV)
+* Partially through completion of make file
+* Completed streamer (node) class
+    
+#### TODO this weekend:
+
+* Finish BFS
+
+* Finish make file
+
+* Testing for BFS
+
+* Create CSV parser class
+    * One method parses the data for the streamer
+    * One method parses the connections between nodes
