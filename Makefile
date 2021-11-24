@@ -24,6 +24,17 @@ streamer_main: streamer.o smain.o
 streamer_test: streamer.o stest.o catch.o
 	$(CXX) streamer.o stest.o catch.o -o streamer_test
 
+
+CSVParser.o: CSVParser/CSVParser.cpp CSVParser/CSVParser.h
+	$(CXX) -c CSVParser/CSVParser.cpp
+
+CSVtest.o: CSVParser/tests/CSVParser-tests.cpp
+	$(CXX) -c CSVParser/tests/CSVParser-tests.cpp -o CSVtest.o
+
+CSVParser_test: streamer.o CSVtest.o CSVParser.o catch.o
+	$(CXX) streamer.o CSVtest.o CSVParser.o catch.o -o CSVParser_test
+
+
 clean:
 	rm main streamer_main streamer_test *.o
 
