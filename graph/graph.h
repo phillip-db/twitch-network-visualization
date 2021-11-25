@@ -1,12 +1,19 @@
 #pragma once
+#include <vector>
+#include "../CSVParser/CSVParser.h"
+#include "../streamer/streamer.h"
 
 class Graph {
-  public:
-    Graph(int nodes);
-    void addEdge(int node1, int node2);
-    void BFS(int source);
+ public:
+  Graph();
+  Graph(const vector<Streamer>& streamers, unsigned numNodes);
 
-  private:
-    int nodes_; //# of nodes
-    list<int> *adjacency;
+  bool isAdjacent(unsigned id1, unsigned id2);
+  vector<unsigned> getEdges(unsigned id);
+  int getEdgeWeight(unsigned id1, unsigned id2);
+
+ private:
+  const unsigned kNumNodes = 7107;
+  vector<Streamer> streamers_;
+  vector<vector<unsigned>> adjMatrix_;
 };

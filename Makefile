@@ -34,17 +34,17 @@ CSVtest.o: CSVParser/tests/CSVParser-tests.cpp
 CSVParser_test: streamer.o CSVtest.o CSVParser.o catch.o
 	$(CXX) streamer.o CSVtest.o CSVParser.o catch.o -o CSVParser_test
 
-BFS.o: BFS/BFS.cpp BFS/BFS.h
-	$(CXX) -c BFS/BFS.cpp
+graph.o: graph/graph.cpp graph/graph.h
+	$(CXX) -c graph/graph.cpp
 
-BFStest.o: BFS/tests/BFS-tests.cpp
-	$(CXX) -c BFS/tests/BFS-tests.cpp -o CSVtest.o
+graphtest.o: graph/tests/graph-tests.cpp
+	$(CXX) -c graph/tests/graph-tests.cpp -o graphtest.o
 
-BFS_test: streamer.o CSVtest.o BFS.o catch.o
-	$(CXX) streamer.o CSVtest.o BFS.o catch.o -o BFS_test
+graph_test: graph.o graphtest.o catch.o streamer.o CSVParser.o
+	$(CXX) graph.o graphtest.o catch.o streamer.o CSVParser.o -o graph_test
 
 
 clean:
-	rm main streamer_main streamer_test *.o
+	rm main streamer_main streamer_test CSVParser_test graph_test *.o
 
 .PHONY: clean

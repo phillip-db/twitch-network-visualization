@@ -1,26 +1,31 @@
 #include "graph.h"
+#include <cmath>
 
-Graph::Graph(int nodes){
-  nodes_ = nodes;
-}
+using namespace std;
 
-void Graph::addEdge(int node1, int node2){
-  adjacency[node1].push_back(node2);
-}
+Graph::Graph() {}
+Graph::Graph(const vector<Streamer>& streamers, unsigned numNodes) {
+  streamers_.resize(numNodes);
+  adjMatrix_ = vector<vector<unsigned>>(numNodes, vector<unsigned>(numNodes, 0));
 
-//perform BFS traversal
-void Graph::BFS(int source){
-  //https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/
-
-  queue<unsigned> queue;
-  //visited vector
-
-  while (!queue.empty()) {
-
+  for (Streamer s : streamers) {
+    for (unsigned f : s.getFriends()) {
+      adjMatrix_[s.getId()][f] = 1;
+    }
+    streamers_[s.getId()] = s;
   }
 }
-//adjacency list impl
-//https://www.softwaretestinghelp.com/graph-implementation-cpp/
 
-//graph impl
-//https://stackoverflow.com/questions/5493474/graph-implementation-c
+bool Graph::isAdjacent(unsigned id1, unsigned id2) {
+  if (id1 > adjMatrix_.size() || id2 > adjMatrix_.size() || id1 == id2) return false;
+  return adjMatrix_[id1][id2]; // == 1;
+}
+
+vector<unsigned> Graph::getEdges(unsigned id) {
+  return adjMatrix_[id];
+}
+
+int Graph::getEdgeWeight(unsigned id1, unsigned id2) {
+  if (id1 > adjMatrix_.size() || id2 > adjMatrix_.size() || id1 == id2) return -1;
+  return abs(static_cast<int>(streamers_[id1].getAge()) - static_cast<int>(streamers_[id2].getAge()));
+}
