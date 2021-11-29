@@ -44,3 +44,18 @@
 * Create CSV parser class
     * One method parses the data for the streamer
     * One method parses the connections between nodes
+
+### Week of Nov 29 (spate562)
+* Created a CSV Parser class to read CSV into our Streamer Objects
+* Implemented basic graph methods in-order to construct our graph
+* Finish make file
+
+Note: We are currently behind schedule due to Thanksgiving break
+    
+#### TODO this week:
+
+* Finish graph class implementation
+
+* Start BFS
+
+* Additional testing
