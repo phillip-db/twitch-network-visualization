@@ -1,10 +1,12 @@
 #include "graph.h"
 #include <cmath>
+#include <limits.h>
 
 using namespace std;
 
 Graph::Graph() {}
 Graph::Graph(const vector<Streamer>& streamers, unsigned numNodes) {
+  numNodes_ = numNodes;
   streamers_.resize(numNodes);
   adjMatrix_ = vector<vector<unsigned>>(numNodes, vector<unsigned>(numNodes, 0));
 
@@ -14,6 +16,39 @@ Graph::Graph(const vector<Streamer>& streamers, unsigned numNodes) {
     }
     streamers_[s.getId()] = s;
   }
+}
+
+void Graph::Dijsktra(vector<vector<unsigned>> adjMatrix, unsigned source) {
+  vector<int> distance;  // vectorfor calculating smalles distance from source to every node
+  vector<bool> visited;
+  visited.resize(numNodes_, INT_MAX);
+  distance.resize(numNodes_, -1);
+
+  distance[source] = 0; // distance from source to source is 0
+
+  for (unsigned i = 0; i < numNodes_; i++) {
+    int index = getMinimumDistance(distance, visited);
+    visited[index] = 1;
+    // update distance of neighboring vertex
+  }
+
+  // use priority queue
+  // build minHeap
+}
+
+int Graph::getMinimumDistance(vector<int> distance, vector<bool> visited) {
+  int currentMin = INT_MAX;
+  int index = -1; // shouldnt set to -1 probably
+
+  for (int i = 0; i < numNodes_; i++) {
+    if (!visited[i] && distance[i] <= currentMin) {
+      currentMin = distance[i];
+      index = i;
+    }
+    // may need to account if if statement never is done?
+  }
+  return index;
+
 }
 
 bool Graph::isAdjacent(unsigned id1, unsigned id2) {
