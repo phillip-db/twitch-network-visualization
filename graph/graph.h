@@ -17,6 +17,8 @@ class Graph {
   int getNumStreamers();
   int getNodeWeight(unsigned id);
   void Dijsktra(unsigned source, unsigned goal);
+  void BFS(unsigned source);
+  // void BFS(unsigned source);
   int getMinimumDistance(vector<int> distance, vector<bool> visited);
   void printPath(vector<int> parent, int goal);
 

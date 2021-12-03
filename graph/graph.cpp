@@ -2,6 +2,7 @@
 #include <limits.h>
 #include <cmath>
 #include <iostream>
+#include <queue>
 
 using namespace std;
 
@@ -47,6 +48,32 @@ void Graph::Dijsktra(unsigned source, unsigned goal) {
   printPath(parent, goal);
   cout << endl;
 }
+
+void Graph::BFS(unsigned source) {
+  vector<bool> visited = vector<bool>(numNodes_, false);
+  
+  visited[source] = true;
+  queue<unsigned> q;
+  q.push(source);
+
+  while(!q.empty()) {
+    unsigned curr = q.front();
+    q.pop();
+
+    //get i where adjMatrix[curr][i] == 1
+    //enqueue all the i's
+
+    vector<unsigned> adjacent;
+
+    for (unsigned i = 0; i < adjMatrix_[curr].size(); i++) {
+      if (adjMatrix_[curr][i] == 1 && !visited[i]) {
+        q.push(i);
+      }
+    }
+    visited[curr] = true;
+  }
+}
+
 
 int Graph::getMinimumDistance(vector<int> distance, vector<bool> visited) {
   int currentMin = INT_MAX;

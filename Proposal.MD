@@ -14,7 +14,7 @@ We plan on downloading the data in the provided CSV format. Then we will pre-pro
 Once our data is pre-processed, we will transfer over to our C++ files and store the information within our custom TwitchUser objects. This will allow us to then develop and run the methods that are detailed in the section below.
 
 ### Graphing Algorithms: 
-Because we intend to implement finding the shortest path, we would utilize a Breadth First Search algorithm. The estimated time complexity for BFS is O(V + E) where V represents the number of vertices and E represents the number of edges.
+Because we intend to implement finding the shortest path, we would utilize a Breadth First Search algorithm. The estimated time complexity for BFS is O(V^2) where V represents the number of vertices and E represents the number of edges.
 1. Shortest Path algorithm
 * Dijkstra’s algorithm (Est. time complexity - O(V^2))
 * Be able to figure out the shortest link between two specified twitch users
