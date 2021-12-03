@@ -1,16 +1,41 @@
 #include <iostream>
-#include "graph/graph.h"
 #include "CSVParser/CSVParser.h"
+#include "graph/graph.h"
 
-int main() {
+using namespace std;
+
+int main(int argc, char *argv[]) {
+  if (argc != 3) {
+    cout << "Incorrect number of arguments (need 2)" << endl;
+    return 0;
+  }
+
   CSVParser parser;
   vector<Streamer> output;
-  output = parser.parseFile("data/modified_english_target.csv", "data/musae_ENGB_edges.csv");
+  output = parser.parseFile("data/modified_english_target.csv",
+                            "data/musae_ENGB_edges.csv");
   Graph g;
   int numNodes = Graph::kNumNodes;
 
+  int s1 = -1;
+  int s2 = -1;
+
+  for (Streamer s : output) {
+      if (s.getName() == argv[1]) {
+          s1 = s.getId();
+      }
+      if (s.getName() == argv[2]) {
+          s2 = s.getId();
+      }
+  }
+
+  if (s1 == -1) cout << "First streamer is invalid."<< endl;
+  if (s2 == -1) cout << "Second streamer is invalid." << endl;
+  if (s1 == -1 || s2 == -1) return 0;
+
   g = Graph(output, numNodes);
-  g.Dijsktra(0, 900);
+
+  g.Dijsktra(s1, s2);
 
   return 0;
 }
