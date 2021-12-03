@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 
   g = Graph(output, numNodes);
 
-  g.Dijsktra(s1, s2);
+  g.Dijkstra(s1, s2);
 
   return 0;
 }

@@ -23,7 +23,7 @@ Graph::Graph(const vector<Streamer>& streamers, unsigned numNodes) {
   }
 }
 
-void Graph::Djikstra(unsigned source, unsigned goal) {
+void Graph::Dijkstra(unsigned source, unsigned goal) {
   vector<int> distance = vector<int>(numNodes_, INT_MAX);  // vectorfor calculating smalles distance from source
                          // to every node
   vector<bool> visited = vector<bool>(numNodes_, false);
