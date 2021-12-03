@@ -1,7 +1,7 @@
 CXX = clang++
 
-main: main.o
-	$(CXX) main.o -o main
+main: main.o streamer.o CSVParser.o graph.o
+	$(CXX) main.o streamer.o CSVParser.o graph.o -o main
 
 main.o: main.cpp
 	$(CXX) -c main.cpp

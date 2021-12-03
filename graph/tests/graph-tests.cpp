@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <iostream>
 #include "../../catch/catch.hpp"
+#include "../../CSVParser/CSVParser.h"
 #include "../graph.h"
 
 using namespace std;
