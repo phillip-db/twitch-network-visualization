@@ -59,3 +59,27 @@ Note: We are currently behind schedule due to Thanksgiving break
 * Start BFS
 
 * Additional testing
+
+### Week of Dec 3 (cywang3)
+* Finished graph tests
+
+* Implemented BFS
+
+* Finished implementation of Dijkstra's Algorithmn
+    * Created test cases
+    
+* Added PNG and pixel classes
+
+* Added command line argument support
+
+Note: Mostly caught up to former schedule!
+    
+#### TODO this week:
+
+* Add test cases for BFS
+
+* Start on visualization code
+
+* Additional testing
+
+* Catch any bugs
