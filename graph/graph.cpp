@@ -16,16 +16,20 @@ Graph::Graph(const vector<Streamer>& streamers, unsigned numNodes) {
   }
 
   for (Streamer s : streamers) {
-    for (unsigned f : s.getFriends()) {
-      adjMatrix_[s.getId()][f] = 1;
-    }
     streamers_[s.getId()] = s;
+  }
+
+  for (Streamer s : streamers) {
+    for (unsigned f : s.getFriends()) {
+      adjMatrix_[s.getId()][f] = getEdgeWeight(s.getId(), f);
+    }
   }
 }
 
 void Graph::Dijkstra(unsigned source, unsigned goal) {
-  vector<int> distance = vector<int>(numNodes_, INT_MAX);  // vectorfor calculating smalles distance from source
-                         // to every node
+  vector<int> distance =
+      vector<int>(numNodes_, INT_MAX);  // vectorfor calculating smalles
+                                        // distance from source to every node
   vector<bool> visited = vector<bool>(numNodes_, false);
   vector<int> parent = vector<int>(numNodes_, -1);
 
@@ -37,7 +41,7 @@ void Graph::Dijkstra(unsigned source, unsigned goal) {
     // update distance of neighboring vertex
     for (int y = 0; y < numNodes_; y++) {
       if (!visited[y] && isAdjacent(x, y) && distance[x] != INT_MAX &&
-          distance[x] + getEdgeWeight(x, y) < distance[y]) {
+          distance[x] + adjMatrix_[x][y] < distance[y]) {
         parent[y] = x;
         distance[y] = distance[x] + getEdgeWeight(x, y);
       }
@@ -51,17 +55,17 @@ void Graph::Dijkstra(unsigned source, unsigned goal) {
 
 void Graph::BFS(unsigned source) {
   vector<bool> visited = vector<bool>(numNodes_, false);
-  
+
   visited[source] = true;
   queue<unsigned> q;
   q.push(source);
 
-  while(!q.empty()) {
+  while (!q.empty()) {
     unsigned curr = q.front();
     q.pop();
 
-    //get i where adjMatrix[curr][i] == 1
-    //enqueue all the i's
+    // get i where adjMatrix[curr][i] == 1
+    // enqueue all the i's
 
     vector<unsigned> adjacent;
 
@@ -73,7 +77,6 @@ void Graph::BFS(unsigned source) {
     visited[curr] = true;
   }
 }
-
 
 int Graph::getMinimumDistance(vector<int> distance, vector<bool> visited) {
   int currentMin = INT_MAX;
@@ -98,7 +101,7 @@ void Graph::printPath(vector<int> parent, int goal) {
 bool Graph::isAdjacent(unsigned id1, unsigned id2) {
   if (id1 >= adjMatrix_.size() || id2 >= adjMatrix_.size() || id1 == id2)
     return false;
-  return adjMatrix_[id1][id2];  // == 1;
+  return adjMatrix_[id1][id2];  // > 0;
 }
 
 vector<unsigned> Graph::getEdges(unsigned id) {
