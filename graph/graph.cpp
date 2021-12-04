@@ -67,15 +67,24 @@ void Graph::BFS(unsigned source) {
     // get i where adjMatrix[curr][i] == 1
     // enqueue all the i's
 
-    vector<unsigned> adjacent;
+    vector<pair<unsigned, unsigned>> adjacent;
 
     for (unsigned i = 0; i < adjMatrix_[curr].size(); i++) {
-      if (adjMatrix_[curr][i] == 1 && !visited[i]) {
-        q.push(i);
+      if (adjMatrix_[curr][i] != 0 && !visited[i]) {
+        adjacent.push_back(make_pair(adjMatrix_[curr][i], i)));
       }
     }
+
+    sort(adjacent.begin(),adjacent.end());
+
+    for (unsigned id : adjacent) {
+      q.push(id);
+    }
+
     visited[curr] = true;
+    // cout << curr
   }
+  // cout << endl;
 }
 
 int Graph::getMinimumDistance(vector<int> distance, vector<bool> visited) {
