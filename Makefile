@@ -43,8 +43,14 @@ graphtest.o: graph/tests/graph-tests.cpp
 graph_test: graph.o graphtest.o catch.o streamer.o CSVParser.o
 	$(CXX) graph.o graphtest.o catch.o streamer.o CSVParser.o -o graph_test
 
+shortest_path.o: shortest_path.cpp
+	$(CXX) -c shortest_path.cpp
+
+shortest_path: shortest_path.o streamer.o CSVParser.o graph.o
+	$(CXX) shortest_path.o streamer.o CSVParser.o graph.o -o shortest_path
+
 
 clean:
-	rm main streamer_main streamer_test CSVParser_test graph_test *.o
+	rm main streamer_main streamer_test CSVParser_test graph_test shortest_path *.o
 
 .PHONY: clean
