@@ -3,6 +3,7 @@
 #include <cmath>
 #include <iostream>
 #include <queue>
+#include <algorithm>
 
 using namespace std;
 
@@ -71,14 +72,14 @@ void Graph::BFS(unsigned source) {
 
     for (unsigned i = 0; i < adjMatrix_[curr].size(); i++) {
       if (adjMatrix_[curr][i] != 0 && !visited[i]) {
-        adjacent.push_back(make_pair(adjMatrix_[curr][i], i)));
+        adjacent.push_back(make_pair(adjMatrix_[curr][i], i));
       }
     }
 
     sort(adjacent.begin(),adjacent.end());
 
-    for (unsigned id : adjacent) {
-      q.push(id);
+    for (auto id : adjacent) {
+      q.push(id.second);
     }
 
     visited[curr] = true;
