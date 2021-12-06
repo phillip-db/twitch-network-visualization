@@ -17,8 +17,17 @@ class GraphVisual {
 
   private:
     // struct Node {
-    //   unsigned radius;
+    //   unsigned radius; --based on views, average for dataset is 193,470
     //   HSLAPixel::point center;
     //   unsigned viewers;
     // }
+
+    //unsigned width_;
+    //unsigned height_;
+
+    //vars found experimentally:
+    /*
+      #iterations for simulation
+      optimal dist between vertices constant k = C * sqrt(area/num vertices)
+    */
 };
