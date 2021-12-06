@@ -8,6 +8,7 @@
 using namespace std;
 
 Graph::Graph() {}
+
 Graph::Graph(const vector<Streamer>& streamers, unsigned numNodes) {
   numNodes_ = numNodes;
   streamers_.resize(numNodes);

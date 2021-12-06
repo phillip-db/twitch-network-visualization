@@ -3,6 +3,9 @@
 class GraphVisual {
   public:
     // GraphVisual();
+    //attractForce();
+    //repelForce();
+
     // drawNode(HSLAPixel::point center);
     // drawEdge(HSLAPixel::point center1, HSLAPixel::point center2);
     // getForcedBasedDistance();
