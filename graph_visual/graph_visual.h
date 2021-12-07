@@ -9,15 +9,12 @@ using namespace std;
 
 class GraphVisual {
   public:
-<<<<<<< HEAD
     GraphVisual();
     GraphVisual(Graph graph, unsigned width, unsigned height);
-=======
     // GraphVisual();
     //attractForce();
     //repelForce();
 
->>>>>>> bbff9ccb7665d056df31e7abac14d5543e628e55
     // drawNode(HSLAPixel::point center);
     // drawEdge(HSLAPixel::point center1, HSLAPixel::point center2);
     // checkNodeNodeOverlap(HSLAPixel::point center1, unsigned radius1, HSLAPixel::point center2, unsigned radius2);
