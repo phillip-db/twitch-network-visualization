@@ -1,11 +1,18 @@
 #pragma once
+#include <random>
+#include "graph/graph.h"
+#include "streamer/streamer.h"
+#include <utility>
+#include <iostream>
+
+using namespace std;
 
 class GraphVisual {
   public:
-    // GraphVisual();
+    GraphVisual();
+    GraphVisual(Graph graph, unsigned width, unsigned height);
     // drawNode(HSLAPixel::point center);
     // drawEdge(HSLAPixel::point center1, HSLAPixel::point center2);
-    // getForcedBasedDistance();
     // checkNodeNodeOverlap(HSLAPixel::point center1, unsigned radius1, HSLAPixel::point center2, unsigned radius2);
     // checkBorderNodeOverlap(HSLAPixel::point center, unsigned radius);
 
@@ -16,14 +23,25 @@ class GraphVisual {
 
 
   private:
-    // struct Node {
-    //   unsigned radius; --based on views, average for dataset is 193,470
-    //   HSLAPixel::point center;
-    //   unsigned viewers;
-    // }
+    unsigned CalcDistance(Node n1, Node n2);
+    pair<unsigned, unsigned> CalcRepulsionForce(Node n1, Node n2);
+    pair<unsigned, unsigned> CalcAttractionForce(Node n1, Node n2);
+    
+    struct Node {
+      Node (unsigned r, pair<unsigned, unsigned> c, Streamer s) : radius(r), center(c), streamer(s) {};
+      unsigned radius; //--based on views, average for dataset is 193,470
+      pair<unsigned, unsigned> center;
+      Streamer streamer;
+    };
 
-    //unsigned width_;
-    //unsigned height_;
+    Graph g_;
+
+    unsigned width_;
+    unsigned height_;
+    unsigned kAverageViewers = 193470;
+
+    vector<Node> nodes_;
+    vector<vector<adjMatrix>> adjMatrix_;
 
     //vars found experimentally:
     /*

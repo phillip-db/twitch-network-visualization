@@ -139,3 +139,9 @@ int Graph::getNodeWeight(unsigned id) {
   }
   return -1;
 }
+
+vector<Streamer> Graph::getStreamers() {
+  return streamers_;
+}
+
+vector<vector<unsigned>> Graph::getAdjMatrix() { return adjMatrix_;}

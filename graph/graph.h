@@ -21,6 +21,8 @@ class Graph {
   // void BFS(unsigned source);
   int getMinimumDistance(vector<int> distance, vector<bool> visited);
   void printPath(vector<int> parent, int goal);
+  vector<Streamer> getStreamers();
+  vector<vector<unsigned>> getAdjMatrix();
 
  private:
   vector<Streamer> streamers_;
