@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <iostream>
-#include "../../catch/catch.hpp"
-#include "../../CSVParser/CSVParser.h"
+#include "../CSVParser.h"
+#include "../cs225/catch/catch.hpp"
 #include "../graph.h"
 
 using namespace std;
@@ -47,7 +47,7 @@ TEST_CASE("Test node is not adjacent to itself") {
 }
 
 TEST_CASE("Test edge weight with invalid id") {
-    REQUIRE(g.getEdgeWeight(10000, 0) == -1);
+  REQUIRE(g.getEdgeWeight(10000, 0) == -1);
 }
 
 TEST_CASE("Test edge weight calculation") {
@@ -55,5 +55,5 @@ TEST_CASE("Test edge weight calculation") {
 }
 
 TEST_CASE("Test node weight with invalid id") {
-    REQUIRE(g.getNodeWeight(10000) == -1);
+  REQUIRE(g.getNodeWeight(10000) == -1);
 }

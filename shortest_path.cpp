@@ -1,6 +1,6 @@
 #include <iostream>
-#include "CSVParser/CSVParser.h"
-#include "graph/graph.h"
+#include "CSVParser.h"
+#include "graph.h"
 
 using namespace std;
 
@@ -21,15 +21,15 @@ int main(int argc, char *argv[]) {
   int s2 = -1;
 
   for (Streamer s : output) {
-      if (s.getName() == argv[1]) {
-          s1 = s.getId();
-      }
-      if (s.getName() == argv[2]) {
-          s2 = s.getId();
-      }
+    if (s.getName() == argv[1]) {
+      s1 = s.getId();
+    }
+    if (s.getName() == argv[2]) {
+      s2 = s.getId();
+    }
   }
 
-  if (s1 == -1) cout << "First streamer is invalid."<< endl;
+  if (s1 == -1) cout << "First streamer is invalid." << endl;
   if (s2 == -1) cout << "Second streamer is invalid." << endl;
   if (s1 == -1 || s2 == -1) return 0;
 

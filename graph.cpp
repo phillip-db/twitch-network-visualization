@@ -1,9 +1,9 @@
 #include "graph.h"
 #include <limits.h>
+#include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <queue>
-#include <algorithm>
 
 using namespace std;
 
@@ -13,7 +13,7 @@ Graph::Graph(const vector<Streamer>& streamers, unsigned numNodes) {
   numNodes_ = numNodes;
   streamers_.resize(numNodes);
   adjMatrix_.resize(numNodes);
-  for (int i = 0; i < adjMatrix_.size(); i++) {
+  for (unsigned i = 0; i < adjMatrix_.size(); i++) {
     adjMatrix_[i].resize(numNodes);
   }
 
@@ -41,9 +41,9 @@ void Graph::Dijkstra(unsigned source, unsigned goal) {
     int x = getMinimumDistance(distance, visited);
     visited[x] = true;
     // update distance of neighboring vertex
-    for (int y = 0; y < numNodes_; y++) {
+    for (unsigned y = 0; y < numNodes_; y++) {
       if (!visited[y] && isAdjacent(x, y) && distance[x] != INT_MAX &&
-          distance[x] + adjMatrix_[x][y] < distance[y]) {
+          distance[x] + static_cast<int>(adjMatrix_[x][y]) < distance[y]) {
         parent[y] = x;
         distance[y] = distance[x] + getEdgeWeight(x, y);
       }
@@ -77,7 +77,7 @@ void Graph::BFS(unsigned source) {
       }
     }
 
-    sort(adjacent.begin(),adjacent.end());
+    sort(adjacent.begin(), adjacent.end());
 
     for (auto id : adjacent) {
       q.push(id.second);
@@ -93,7 +93,7 @@ int Graph::getMinimumDistance(vector<int> distance, vector<bool> visited) {
   int currentMin = INT_MAX;
   int index = -1;  // shouldnt set to -1 probably
 
-  for (int i = 0; i < numNodes_; i++) {
+  for (unsigned i = 0; i < numNodes_; i++) {
     if (!visited[i] && distance[i] <= currentMin) {
       currentMin = distance[i];
       index = i;
@@ -118,7 +118,7 @@ bool Graph::isAdjacent(unsigned id1, unsigned id2) {
 vector<unsigned> Graph::getEdges(unsigned id) {
   vector<unsigned> out;
   if (id < adjMatrix_.size()) {
-    for (int i = 0; i < adjMatrix_[id].size(); i++) {
+    for (unsigned i = 0; i < adjMatrix_[id].size(); i++) {
       if (adjMatrix_[id][i]) out.push_back(i);
     }
   }
