@@ -1,7 +1,7 @@
 #pragma once
 #include <random>
-#include "graph/graph.h"
-#include "streamer/streamer.h"
+#include "graph.h"
+#include "streamer.h"
 #include <utility>
 #include <iostream>
 
@@ -27,18 +27,18 @@ class GraphVisual {
 
 
   private:
-    float CalcAngle(pair<double, double> thisPoint, pair<double,double> otherPoint);
-    pair<double, double> CalcComponents(double force, float angleDeg);
-    double CalcDistance(Node n1, Node n2);
-    pair<double, double> CalcRepulsionForce(Node n1, Node n2);
-    pair<double, double> CalcAttractionForce(Node n1, Node n2);
-    
     struct Node {
       Node (unsigned r, pair<unsigned, unsigned> c, Streamer s) : radius(r), center(c), streamer(s) {};
       unsigned radius; //--based on views, average for dataset is 193,470
       pair<unsigned, unsigned> center;
       Streamer streamer;
     };
+
+    float CalcAngle(pair<double, double> thisPoint, pair<double,double> otherPoint);
+    pair<double, double> CalcComponents(double force, float angleDeg);
+    double CalcDistance(Node n1, Node n2);
+    pair<double, double> CalcRepulsionForce(Node n1, Node n2);
+    pair<double, double> CalcAttractionForce(Node n1, Node n2);
 
     Graph g_;
 
@@ -49,7 +49,7 @@ class GraphVisual {
     double kAreaConst = .01;
 
     vector<Node> nodes_;
-    vector<vector<adjMatrix>> adjMatrix_;
+    vector<vector<unsigned>> adjMatrix_;
 
     //vars found experimentally:
     /*

@@ -1,7 +1,7 @@
 #include "graph_visual.h"
-#include "graph/graph.h"
-#include "streamer/streamer.h"
 #include <cmath>
+
+using namespace std;
 
 GraphVisual::GraphVisual() {}
 
@@ -20,7 +20,7 @@ GraphVisual::GraphVisual(Graph graph, unsigned width, unsigned height) {
         pair<unsigned, unsigned> coords = make_pair(randX, randY);
 
         // modify this for size of node, viewers = e^radius - 1
-        unsigned radius = log(s.getViews + 1); //standardizes radius based on range of views
+        unsigned radius = log(s.getViews() + 1); //standardizes radius based on range of views
 
         Node n(radius, coords, s); //creates a node for each streamer with random intial position
 
@@ -29,7 +29,7 @@ GraphVisual::GraphVisual(Graph graph, unsigned width, unsigned height) {
 
     adjMatrix_ = g_.getAdjMatrix();
 
-    forceConst_ = kAreaConst * (math.sqrt((width_*height_)/g_.getStreamers().size()));
+    forceConst_ = kAreaConst * (sqrt((width_*height_)/g_.getStreamers().size()));
 }
 
 float CalcAngle(pair<unsigned, unsigned> thisPoint, pair<unsigned,unsigned> otherPoint) {
@@ -51,7 +51,7 @@ double GraphVisual::CalcDistance(Node n1, Node n2) {
     unsigned x = n1.center.first - n2.center.first;
     unsigned y = n1.center.second - n2.center.second;
 
-    double dist = math.sqrt(math.pow(x,2) + math.pow(y,2));
+    double dist = sqrt(pow(x,2) + pow(y,2));
 
     return dist;
 }
@@ -60,8 +60,7 @@ pair<double, double> GraphVisual::CalcAttractionForce(Node n1, Node n2) {
 
     double distance = CalcDistance(n1, n2);
 
-    double a_force = math.pow(distance, 2)/forceConst_;
+    double a_force = pow(distance, 2)/forceConst_;
 
-
-    
+    return pair<double, double>(0.0, 0.0); // replace this   
 }
