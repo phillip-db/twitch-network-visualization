@@ -27,9 +27,11 @@ class GraphVisual {
 
 
   private:
-    unsigned CalcDistance(Node n1, Node n2);
-    pair<unsigned, unsigned> CalcRepulsionForce(Node n1, Node n2);
-    pair<unsigned, unsigned> CalcAttractionForce(Node n1, Node n2);
+    float CalcAngle(pair<double, double> thisPoint, pair<double,double> otherPoint);
+    pair<double, double> CalcComponents(double force, float angleDeg);
+    double CalcDistance(Node n1, Node n2);
+    pair<double, double> CalcRepulsionForce(Node n1, Node n2);
+    pair<double, double> CalcAttractionForce(Node n1, Node n2);
     
     struct Node {
       Node (unsigned r, pair<unsigned, unsigned> c, Streamer s) : radius(r), center(c), streamer(s) {};
@@ -42,7 +44,9 @@ class GraphVisual {
 
     unsigned width_;
     unsigned height_;
+    unsigned forceConst_;
     unsigned kAverageViewers = 193470;
+    double kAreaConst = .01;
 
     vector<Node> nodes_;
     vector<vector<adjMatrix>> adjMatrix_;

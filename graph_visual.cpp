@@ -28,17 +28,40 @@ GraphVisual::GraphVisual(Graph graph, unsigned width, unsigned height) {
     }
 
     adjMatrix_ = g_.getAdjMatrix();
+
+    forceConst_ = kAreaConst * (math.sqrt((width_*height_)/g_.getStreamers().size()));
 }
 
-unsigned GraphVisual::CalcDistance(Node n1, Node n2) {
+float CalcAngle(pair<unsigned, unsigned> thisPoint, pair<unsigned,unsigned> otherPoint) {
+    int delX = thisPoint.first - otherPoint.first;
+    int delY = thisPoint.second - otherPoint.second;
+
+    float angleDegrees = atan2(delY, delX) * 180/3.1415;
+
+    return angleDegrees * - 1;
+}
+
+pair<double, double> CalcComponents(double force, float angleDeg) {
+    double xComp = force * sin(angleDeg * 3.1415/180);
+    double yComp = force * cos(angleDeg * 3.1415/180);
+
+    return make_pair(xComp, yComp);
+}
+double GraphVisual::CalcDistance(Node n1, Node n2) {
     unsigned x = n1.center.first - n2.center.first;
     unsigned y = n1.center.second - n2.center.second;
 
-    dist = math.sqrt(math.pow(x,2) + math.pow(y,2));
+    double dist = math.sqrt(math.pow(x,2) + math.pow(y,2));
 
-    return <unsigned>dist;
+    return dist;
 }
 
-// pair<unsigned, unsigned> GraphVisual::CalcAttractionForce(Node n1, Node n2) {
+pair<double, double> GraphVisual::CalcAttractionForce(Node n1, Node n2) {
 
-// }
+    double distance = CalcDistance(n1, n2);
+
+    double a_force = math.pow(distance, 2)/forceConst_;
+
+
+    
+}
