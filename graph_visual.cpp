@@ -32,18 +32,18 @@ GraphVisual::GraphVisual(Graph graph, unsigned width, unsigned height) {
     forceConst_ = kAreaConst * (sqrt((width_*height_)/g_.getStreamers().size()));
 }
 
-float CalcAngle(pair<unsigned, unsigned> thisPoint, pair<unsigned,unsigned> otherPoint) {
+float GraphVisual::CalcAngle(pair<unsigned, unsigned> thisPoint, pair<unsigned,unsigned> otherPoint) {
     int delX = thisPoint.first - otherPoint.first;
     int delY = thisPoint.second - otherPoint.second;
 
-    float angleDegrees = atan2(delY, delX) * 180/3.1415;
+    float angleDegrees = atan2(delY, delX) * 180/M_PI;
 
-    return angleDegrees * - 1;
+    return angleDegrees;
 }
 
-pair<double, double> CalcComponents(double force, float angleDeg) {
-    double xComp = force * sin(angleDeg * 3.1415/180);
-    double yComp = force * cos(angleDeg * 3.1415/180);
+pair<double, double> GraphVisual::CalcComponents(double force, float angleDeg) {
+    double xComp = force * cos(angleDeg * M_PI/180);
+    double yComp = force * sin(angleDeg * M_PI/180);
 
     return make_pair(xComp, yComp);
 }
@@ -62,5 +62,69 @@ pair<double, double> GraphVisual::CalcAttractionForce(Node n1, Node n2) {
 
     double a_force = pow(distance, 2)/forceConst_;
 
-    return pair<double, double>(0.0, 0.0); // replace this   
+    float angle = CalcAngle(n1.center, n2.center);
+
+    pair<double, double> components = CalcComponents(a_force, angle);
+
+    return components;
 }
+
+pair<double, double> GraphVisual::CalcRepulsionForce(Node n1, Node n2) {
+
+    double distance = CalcDistance(n1, n2);
+
+    double a_force = -1 * pow(forceConst_,2)/distance;
+
+    float angle = CalcAngle(n1.center, n2.center);
+
+    pair<double, double> components = CalcComponents(a_force, angle);
+
+    return components;
+}
+
+void GraphVisual::Arrange() {
+    unsigned count = 0;
+    double sumDisplacement = 0;
+    while(count < kMaxIterations && sumDisplacement < KDisplaceThreshold) {
+        sumDisplacement = 0;
+        vector<pair<double, double>> nodeVelocities;
+        for (unsigned i = 0; i < nodes_.size(); i++) {
+            vector<pair<double, double>> netForce;
+            for (unsigned j = 0; j < nodes_.size(); j++) {
+                if (i != j) {
+                    netForce.push_back(CalcRepulsionForce(nodes_[i], nodes_[j]));
+                }
+                if (adjMatrix_[nodes_[i].streamer.getId()][nodes_[i].streamer.getId()] > 0) {
+                    netForce.push_back(CalcAttractionForce(nodes_[i], nodes_[j]));
+                }
+            }
+            double xNet = 0;
+            double yNet = 0;
+            for (pair<double,double> p : netForce) { //sum up the net force
+                xNet += p.first;
+                yNet += p.second;
+            }
+
+            nodeVelocities.push_back(make_pair(xNet, yNet));
+        }
+        for (unsigned v = 0; v < nodeVelocities.size(); v++) {
+            if (nodeVelocities[v].first < 0) {
+                nodes_[v].center.first -= nodeVelocities[v].first;
+            } else {
+                nodes_[v].center.first += nodeVelocities[v].first;
+            }
+
+            if (nodeVelocities[v].second < 0) {
+                nodes_[v].center.second -= nodeVelocities[v].second;
+            } else {
+                nodes_[v].center.second += nodeVelocities[v].second;
+            }
+        }
+
+        for (pair<double, double> p : nodeVelocities) {
+            sumDisplacement += sqrt(pow(p.first, 2) + pow(p.second,2)); 
+        }
+        count++;
+    }
+}
+

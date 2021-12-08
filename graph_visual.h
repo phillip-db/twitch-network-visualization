@@ -11,6 +11,7 @@ class GraphVisual {
   public:
     GraphVisual();
     GraphVisual(Graph graph, unsigned width, unsigned height);
+    void Arrange();
     // GraphVisual();
     //attractForce();
     //repelForce();
@@ -34,7 +35,7 @@ class GraphVisual {
       Streamer streamer;
     };
 
-    float CalcAngle(pair<double, double> thisPoint, pair<double,double> otherPoint);
+    float CalcAngle(pair<unsigned, unsigned> thisPoint, pair<unsigned, unsigned> otherPoint);
     pair<double, double> CalcComponents(double force, float angleDeg);
     double CalcDistance(Node n1, Node n2);
     pair<double, double> CalcRepulsionForce(Node n1, Node n2);
@@ -45,8 +46,10 @@ class GraphVisual {
     unsigned width_;
     unsigned height_;
     unsigned forceConst_;
-    unsigned kAverageViewers = 193470;
+    // unsigned kAverageViewers = 193470;
     double kAreaConst = .01;
+    unsigned kMaxIterations = 100;
+    double KDisplaceThreshold = 10.0;
 
     vector<Node> nodes_;
     vector<vector<unsigned>> adjMatrix_;
