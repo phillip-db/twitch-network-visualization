@@ -5,7 +5,6 @@
 #include <vector>
 #include <algorithm>
 
-
 using namespace std;
 
 vector<unsigned> friends;
