@@ -89,7 +89,6 @@ TEST_CASE("Test parseFile") {
   }
 
   vector<unsigned> check{529, 1773, 3285, 5591, 2588, 3387, 5945};
-  cout << "check" << endl;
   REQUIRE(output[0].getFriends().size() == 7);
   REQUIRE(output[1].getFriends().size() == 19);
   REQUIRE(output[2].getFriends().size() == 9);

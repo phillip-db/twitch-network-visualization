@@ -1,6 +1,7 @@
 #include <iostream>
 #include "CSVParser.h"
 #include "graph.h"
+#include "utils.h"
 
 using namespace std;
 
@@ -34,8 +35,8 @@ int main(int argc, char *argv[]) {
   if (s1 == -1 || s2 == -1) return 0;
 
   g = Graph(output, numNodes);
-
-  g.Dijkstra(s1, s2);
+  vector<string> path = g.Dijkstra(s1, s2);
+  printPath(path);
 
   return 0;
 }

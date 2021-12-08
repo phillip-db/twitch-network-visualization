@@ -28,7 +28,8 @@ Graph::Graph(const vector<Streamer>& streamers, unsigned numNodes) {
   }
 }
 
-void Graph::Dijkstra(unsigned source, unsigned goal) {
+vector<string> Graph::Dijkstra(unsigned source, unsigned goal) {
+  vector<string> path = vector<string>{"No valid path."};
   vector<int> distance =
       vector<int>(numNodes_, INT_MAX);  // vectorfor calculating smalles
                                         // distance from source to every node
@@ -50,13 +51,18 @@ void Graph::Dijkstra(unsigned source, unsigned goal) {
     }
   }
 
-  cout << streamers_[source].getName();
-  printPath(parent, goal);
-  cout << endl;
+  if (distance[goal] == INT_MAX) {
+    return path;
+  }
+
+  path[0] = streamers_[source].getName();
+  recursePath(parent, goal, path);
+  return path;
 }
 
-void Graph::BFS(unsigned source) {
+vector<string> Graph::BFS(unsigned source) {
   vector<bool> visited = vector<bool>(numNodes_, false);
+  vector<string> traversal;
 
   visited[source] = true;
   queue<unsigned> q;
@@ -65,10 +71,12 @@ void Graph::BFS(unsigned source) {
   while (!q.empty()) {
     unsigned curr = q.front();
     q.pop();
+    visited[curr] = true;
 
     // get i where adjMatrix[curr][i] == 1
     // enqueue all the i's
 
+    //            weight, streamer id
     vector<pair<unsigned, unsigned>> adjacent;
 
     for (unsigned i = 0; i < adjMatrix_[curr].size(); i++) {
@@ -80,13 +88,17 @@ void Graph::BFS(unsigned source) {
     sort(adjacent.begin(), adjacent.end());
 
     for (auto id : adjacent) {
-      q.push(id.second);
+      if (!visited[id.second]) {
+        q.push(id.second);
+      }
     }
 
-    visited[curr] = true;
-    // cout << curr
+    while (!q.empty() && visited[q.front()]) {
+      q.pop();
+    }
+    traversal.push_back(streamers_[curr].getName());
   }
-  // cout << endl;
+  return traversal;
 }
 
 int Graph::getMinimumDistance(vector<int> distance, vector<bool> visited) {
@@ -103,10 +115,10 @@ int Graph::getMinimumDistance(vector<int> distance, vector<bool> visited) {
   return index;
 }
 
-void Graph::printPath(vector<int> parent, int goal) {
+void Graph::recursePath(vector<int> parent, int goal, vector<string>& path) {
   if (parent[goal] == -1) return;
-  printPath(parent, parent[goal]);
-  cout << "->" << streamers_[goal].getName();
+  recursePath(parent, parent[goal], path);
+  path.push_back(streamers_[goal].getName());
 }
 
 bool Graph::isAdjacent(unsigned id1, unsigned id2) {

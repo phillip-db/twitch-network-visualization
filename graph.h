@@ -16,11 +16,9 @@ class Graph {
   int getEdgeWeight(unsigned id1, unsigned id2);
   int getNumStreamers();
   int getNodeWeight(unsigned id);
-  void Dijkstra(unsigned source, unsigned goal);
-  void BFS(unsigned source);
-  // void BFS(unsigned source);
+  vector<string> Dijkstra(unsigned source, unsigned goal);
+  vector<string> BFS(unsigned source);
   int getMinimumDistance(vector<int> distance, vector<bool> visited);
-  void printPath(vector<int> parent, int goal);
   vector<Streamer> getStreamers();
   vector<vector<unsigned>> getAdjMatrix();
 
@@ -28,4 +26,6 @@ class Graph {
   vector<Streamer> streamers_;
   vector<vector<unsigned>> adjMatrix_;
   unsigned numNodes_;
+
+  void recursePath(vector<int> parent, int goal, vector<string>& path);
 };

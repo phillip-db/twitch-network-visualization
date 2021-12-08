@@ -3,6 +3,7 @@
 #include "../CSVParser.h"
 #include "../cs225/catch/catch.hpp"
 #include "../graph.h"
+#include "../utils.h"
 
 using namespace std;
 
@@ -56,4 +57,12 @@ TEST_CASE("Test edge weight calculation") {
 
 TEST_CASE("Test node weight with invalid id") {
   REQUIRE(g.getNodeWeight(10000) == -1);
+}
+
+TEST_CASE("Dijkstra") {
+  vector<string> valid_path = g.Dijkstra(2299, 529);
+  vector<string> invalid_path = g.Dijkstra(2299, 0);
+  REQUIRE(valid_path[0] == "CaptainTeabeard");
+  REQUIRE(valid_path[1] == "EnderKate");
+  REQUIRE(invalid_path[0] == "No valid path.");
 }
