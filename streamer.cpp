@@ -12,8 +12,6 @@ Streamer::Streamer(unsigned id, std::string name, unsigned views, unsigned age,
   friends_ = friends;
 }
 
-void Streamer::setFriends(std::vector<unsigned> friends) { friends_ = friends; }
-
 bool Streamer::isFriend(unsigned id) const {
   for (unsigned i = 0; i < friends_.size(); i++) {
     if (friends_[i] == id) {
@@ -30,3 +28,4 @@ std::string Streamer::getName() const { return name_; }
 unsigned Streamer::getViews() const { return views_; }
 unsigned Streamer::getAge() const { return age_; }
 std::vector<unsigned> Streamer::getFriends() const { return friends_; }
+void Streamer::setFriends(std::vector<unsigned> friends) { friends_ = friends; }
