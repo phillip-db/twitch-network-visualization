@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
 
   g = Graph(output, numNodes);
   vector<string> path = g.Dijkstra(s1, s2);
-  printPath(path);
+  utils::printPath(path);
 
   return 0;
 }

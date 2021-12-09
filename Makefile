@@ -1,11 +1,13 @@
 # Executable names:
-EXE = main
+EXE = visualize
 TEST = test
 
 EXE_OBJ = main.o
-OBJS = streamer.o CSVParser.o graph.o graph_visual.o main.o
+OBJS = streamer.o CSVParser.o graph.o graph_visual.o utils.o main.o
 
 include cs225/make/cs225.mk
+
+CLEAN_RM += shortest_path test visualize bfs graph_vis.png graph_vis2.png
 
 EXE2_OBJ = shortest_path.o
 

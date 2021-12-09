@@ -1,6 +1,6 @@
+#include "utils.h"
 #include "CSVParser.h"
 #include "graph.h"
-#include "utils.h"
 
 using namespace std;
 
@@ -14,6 +14,6 @@ int main() {
   g = Graph(output, numNodes);
 
   vector<string> traversal = g.BFS(0);
-  printPath(traversal);
+  utils::printPath(traversal);
   return 0;
 }

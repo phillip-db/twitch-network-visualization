@@ -66,3 +66,11 @@ TEST_CASE("Dijkstra") {
   REQUIRE(valid_path[1] == "EnderKate");
   REQUIRE(invalid_path[0] == "No valid path.");
 }
+
+TEST_CASE("BFS") {
+  vector<string> traversal = g.BFS(2299);
+  vector<string> expected = vector<string>(14);
+  expected[0] = "CaptainTeabeard";
+  expected[1] = "EnderKate";
+  REQUIRE(traversal == expected);
+}
