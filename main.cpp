@@ -19,6 +19,29 @@ int main() {
 
   g = Graph(output, numNodes);
 
-  GraphVisual gv = GraphVisual(g, 1000, 1000);
+  GraphVisual gv = GraphVisual(g, 1500, 1500);
   
+  PNG* png = new PNG(1500, 1500);
+
+  vector<GraphVisual::Node> nodes = gv.getNodes();
+
+  /* for(unsigned i = 0; i < nodes.size(); i++) {
+    if (nodes[i].center.first > 0 && nodes[i].center.second > 0) {
+      gv.drawNode(nodes[i], *png);
+    }
+  }
+
+  png->writeToFile("graph_vis.png"); */
+
+  gv.Arrange();
+
+  nodes = gv.getNodes();
+
+  for(unsigned i = 0; i < nodes.size(); i++) {
+    if (nodes[i].center.first > 0 && nodes[i].center.second > 0) {
+      gv.drawNode(nodes[i], *png);
+    }
+  }
+
+  png->writeToFile("graph_vis2.png");
 }
