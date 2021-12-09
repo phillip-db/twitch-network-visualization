@@ -58,20 +58,6 @@ TEST_CASE("Parsing Friends File - Correct Elements in Vector") {
   REQUIRE(friendsMap.at(2299)[1] == 1773);
 }
 
-TEST_CASE("Find Friends Helper") {
-  CSVParser parser;
-  parser.parseFriends("data/test_data_friends.csv");
-  map<unsigned, vector<unsigned>> friendsMap;
-  friendsMap = parser.getFriendsMap();
-
-  vector<unsigned> friends = parser.findFriendsHelper(2299);
-  vector<unsigned> check{529, 1773, 3285, 5591, 2588, 3387, 5945};
-
-  for (size_t i = 0; i < friends.size(); i++) {
-    REQUIRE(friends[i] == check[i]);
-  }
-}
-
 TEST_CASE("Test parseFile") {
   CSVParser parser;
   vector<Streamer> output;
