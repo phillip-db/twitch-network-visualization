@@ -21,6 +21,7 @@ int main(int argc, char *argv[]) {
   int s1 = -1;
   int s2 = -1;
 
+  // Verify that Streamers exist in dataset
   for (Streamer s : output) {
     if (s.getName() == argv[1]) {
       s1 = s.getId();

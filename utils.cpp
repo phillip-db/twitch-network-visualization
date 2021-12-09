@@ -15,4 +15,4 @@ double distance(pair<unsigned, unsigned> p1, pair<unsigned, unsigned> p2) {
   double dist = sqrt((xDist * xDist) + (yDist * yDist));
   return dist;
 }
-} // namespace utils
+}  // namespace utils
