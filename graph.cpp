@@ -36,7 +36,7 @@ vector<string> Graph::Dijkstra(unsigned source, unsigned goal) {
   vector<bool> visited = vector<bool>(numNodes_, false);
   vector<int> parent = vector<int>(numNodes_, -1);
 
-  distance[source] = 0;  // distance from source to source is 0
+  distance[source] = 0;
 
   for (unsigned i = 0; i < numNodes_ - 1; i++) {
     int x = getMinimumDistance(distance, visited);
@@ -51,7 +51,7 @@ vector<string> Graph::Dijkstra(unsigned source, unsigned goal) {
     }
   }
 
-  if (distance[goal] == INT_MAX) {
+  if (distance[goal] == INT_MAX) { // Start and destination nodes are not connected
     return path;
   }
 
@@ -93,6 +93,7 @@ vector<string> Graph::BFS(unsigned source) {
       }
     }
 
+    // Remove duplicate nodes we have already visited
     while (!q.empty() && visited[q.front()]) {
       q.pop();
     }
