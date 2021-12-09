@@ -19,9 +19,9 @@ int main() {
 
   g = Graph(output, numNodes);
 
-  GraphVisual gv = GraphVisual(g, 1500, 1500);
+  GraphVisual gv = GraphVisual(g, 2000, 2000);
   
-  PNG* png = new PNG(1500, 1500);
+  PNG* png = new PNG(2000, 2000);
 
   vector<GraphVisual::Node> nodes = gv.getNodes();
 
@@ -31,7 +31,7 @@ int main() {
     }
   }
 
-  png->writeToFile("graph_vis.png"); */
+  png->writeToFile("graph_visual1.png"); */
 
   gv.Arrange();
 

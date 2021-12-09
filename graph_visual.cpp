@@ -23,12 +23,18 @@ GraphVisual::GraphVisual(Graph graph, unsigned width, unsigned height) {
     pair<unsigned, unsigned> coords = make_pair(randX, randY);
 
     // modify this for size of node, viewers = e^radius - 1
-    unsigned radius =
-        // ((kUpperBound * (s.getViews() - kMinViews)) / (kMaxViews - kMinViews)) + kShift;
-        2 * log(min(s.getViews(), kClipValue) + 1);  // standardizes radius based on range of views
-
-    Node n(radius, coords,
-           s);  // creates a node for each streamer with random intial position
+    unsigned radius = kRadiusGrouping[kRadiusGrouping.size() - 1].second;
+    unsigned hue = 0;
+    // ((kUpperBound * (s.getViews() - kMinViews)) / (kMaxViews - kMinViews)) + kShift;
+    // 2 * log(min(s.getViews(), kClipValue) + 1);  // standardizes radius based on range of views */
+    for (unsigned i = 1; i < kRadiusGrouping.size(); i++) {
+        if (s.getViews() < kRadiusGrouping[i].first) {
+            radius = kRadiusGrouping[i-1].second;
+            hue = kHueVector[i-1];
+            break;
+        }
+    }
+    Node n(radius, coords,s, hue);  // creates a node for each streamer with random intial position
 
     nodes_.push_back(n);
   }
@@ -147,7 +153,7 @@ void GraphVisual::drawNode(Node n, PNG& png) {
       double dist = utils::distance(curr, n.center);
       if (dist <= n.radius) {
         HSLAPixel& p = png.getPixel(x, y);
-        p.h = 319;
+        p.h = n.hue;
         p.s = 1;
         p.l = 0.5;
         p.a = 1;

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <random>
 #include <utility>
+#include <vector>
 #include "cs225/PNG.h"
 #include "graph.h"
 #include "streamer.h"
@@ -12,11 +13,13 @@ using namespace cs225;
 class GraphVisual {
  public:
   struct Node {
-    Node(unsigned r, pair<unsigned, unsigned> c, Streamer s)
-        : radius(r), center(c), streamer(s){};
+    Node(unsigned r, pair<unsigned, unsigned> c, Streamer s, unsigned h)
+        : radius(r), center(c), streamer(s), hue(h){};
     unsigned radius;  //--based on views, average for dataset is 193,470
     pair<unsigned, unsigned> center;
     Streamer streamer;
+    unsigned hue;
+
   };
   GraphVisual();
   GraphVisual(Graph graph, unsigned width, unsigned height);
@@ -52,9 +55,16 @@ class GraphVisual {
   unsigned height_;
   unsigned forceConst_;
   // unsigned kAverageViewers = 193470;
-  double kAreaConst = 1;
-  unsigned kMaxIterations = 1000;
-  double KDisplaceThreshold = 5.0;
+  double kAreaConst = 1.1;
+  unsigned kMaxIterations = 5000;
+  double KDisplaceThreshold = 0.0001;
+
+  vector<pair<unsigned, unsigned>> kRadiusGrouping = {
+    {0, 3},{7500, 6},{25000, 8},{100000, 10},{250000, 12},{1000000, 15},
+    {10000000, 20},{178000000, 30}
+  };
+
+  vector<unsigned> kHueVector = {279, 246, 224, 186, 99, 44, 25, 0};
 
   // normalization constants
   //double kUpperBound = 20;
@@ -63,7 +73,7 @@ class GraphVisual {
   //double kMinViews = 5;
 
   // clipping constants
-  unsigned kClipValue = 540000;
+  // unsigned kClipValue = 540000;
 
   vector<Node> nodes_;
   vector<vector<unsigned>> adjMatrix_;
