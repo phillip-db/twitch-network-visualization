@@ -50,9 +50,13 @@ float GraphVisual::CalcAngle(pair<unsigned, unsigned> thisPoint,
   int delX = thisPoint.first - otherPoint.first;
   int delY = thisPoint.second - otherPoint.second;
 
-  float angleDegrees = atan2(delY, delX) * 180 / M_PI;
+  if (delX != 0)
+    return atan(delY / delX) * 180 / M_PI;
+  else {
+    return 90;
+  }
 
-  return angleDegrees;
+  
 }
 
 pair<double, double> GraphVisual::CalcComponents(double force, float angleDeg) {
