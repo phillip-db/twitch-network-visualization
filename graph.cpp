@@ -31,7 +31,7 @@ Graph::Graph(const vector<Streamer>& streamers, unsigned numNodes) {
 vector<string> Graph::Dijkstra(unsigned source, unsigned goal) {
   vector<string> path = vector<string>{"No valid path."};
   vector<int> distance =
-      vector<int>(numNodes_, INT_MAX);  // vectorfor calculating smallest
+      vector<int>(numNodes_, INT_MAX);  // vector for calculating smallest
                                         // distance from source to every node
   vector<bool> visited = vector<bool>(numNodes_, false);
   vector<int> parent = vector<int>(numNodes_, -1);
@@ -76,7 +76,7 @@ vector<string> Graph::BFS(unsigned source) {
     // get i where adjMatrix[curr][i] == 1
     // enqueue all the i's
 
-    //            weight, streamer id
+    // weight, streamer id
     vector<pair<unsigned, unsigned>> adjacent;
 
     for (unsigned i = 0; i < adjMatrix_[curr].size(); i++) {
