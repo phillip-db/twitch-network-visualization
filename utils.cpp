@@ -10,8 +10,8 @@ void printPath(vector<string> path) {
 }
 
 double distance(pair<unsigned, unsigned> p1, pair<unsigned, unsigned> p2) {
-  int xDist = p2.first - p1.first;
-  int yDist = p2.second - p1.second;
+  int xDist = static_cast<int>(p2.first) - static_cast<int>(p1.first);
+  int yDist = static_cast<int>(p2.second) -static_cast<int>(p1.second);
   double dist = sqrt((xDist * xDist) + (yDist * yDist));
   return dist;
 }

@@ -7,7 +7,6 @@
 
 
 using namespace std;
-
 int main() {
 
   CSVParser parser;
@@ -19,9 +18,9 @@ int main() {
 
   g = Graph(output, numNodes);
 
-  GraphVisual gv = GraphVisual(g, 2000, 2000);
+  GraphVisual gv = GraphVisual(g, 8000, 8000);
   
-  PNG* png = new PNG(2000, 2000);
+  PNG* png = new PNG(8080, 8080);
 
   vector<GraphVisual::Node> nodes = gv.getNodes();
 
@@ -36,6 +35,8 @@ int main() {
   gv.Arrange();
 
   nodes = gv.getNodes();
+
+  gv.drawAllEdges(*png);
 
   for(unsigned i = 0; i < nodes.size(); i++) {
     if (nodes[i].center.first > 0 && nodes[i].center.second > 0) {

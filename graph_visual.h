@@ -13,13 +13,13 @@ using namespace cs225;
 class GraphVisual {
  public:
   struct Node {
+    Node();
     Node(unsigned r, pair<unsigned, unsigned> c, Streamer s, unsigned h)
         : radius(r), center(c), streamer(s), hue(h){};
     unsigned radius;  //--based on views, average for dataset is 193,470
     pair<unsigned, unsigned> center;
     Streamer streamer;
     unsigned hue;
-
   };
   GraphVisual();
   GraphVisual(Graph graph, unsigned width, unsigned height);
@@ -30,7 +30,8 @@ class GraphVisual {
 
   void drawNode(Node n, PNG& png);
   vector<Node> getNodes();
-  // drawEdge(HSLAPixel::point center1, HSLAPixel::point center2);
+  void drawEdge(Node n1, Node n2, PNG& png);
+  void drawAllEdges(PNG& png);
   // checkNodeNodeOverlap(HSLAPixel::point center1, unsigned radius1,
   // HSLAPixel::point center2, unsigned radius2);
   // checkBorderNodeOverlap(HSLAPixel::point center, unsigned radius);
@@ -55,13 +56,13 @@ class GraphVisual {
   unsigned height_;
   unsigned forceConst_;
   // unsigned kAverageViewers = 193470;
-  double kAreaConst = 1.1;
+  double kAreaConst = 0.08;
   unsigned kMaxIterations = 5000;
   double KDisplaceThreshold = 0.0001;
 
   vector<pair<unsigned, unsigned>> kRadiusGrouping = {
-    {0, 3},{7500, 6},{25000, 8},{100000, 10},{250000, 12},{1000000, 15},
-    {10000000, 20},{178000000, 30}
+    {0, 15},{7500, 19},{25000, 24},{100000, 30},{250000, 35},{1000000, 40},
+    {10000000, 50},{178000000, 70}
   };
 
   vector<unsigned> kHueVector = {279, 246, 224, 186, 99, 44, 25, 0};

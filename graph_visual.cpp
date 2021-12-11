@@ -1,6 +1,6 @@
 #include "graph_visual.h"
-#include <cmath>
 #include <algorithm>
+#include <cmath>
 #include "utils.h"
 
 using namespace std;
@@ -25,16 +25,19 @@ GraphVisual::GraphVisual(Graph graph, unsigned width, unsigned height) {
     // modify this for size of node, viewers = e^radius - 1
     unsigned radius = kRadiusGrouping[kRadiusGrouping.size() - 1].second;
     unsigned hue = 0;
-    // ((kUpperBound * (s.getViews() - kMinViews)) / (kMaxViews - kMinViews)) + kShift;
-    // 2 * log(min(s.getViews(), kClipValue) + 1);  // standardizes radius based on range of views */
+    // ((kUpperBound * (s.getViews() - kMinViews)) / (kMaxViews - kMinViews)) +
+    // kShift; 2 * log(min(s.getViews(), kClipValue) + 1);  // standardizes
+    // radius based on range of views */
     for (unsigned i = 1; i < kRadiusGrouping.size(); i++) {
-        if (s.getViews() < kRadiusGrouping[i].first) {
-            radius = kRadiusGrouping[i-1].second;
-            hue = kHueVector[i-1];
-            break;
-        }
+      if (s.getViews() < kRadiusGrouping[i].first) {
+        radius = kRadiusGrouping[i - 1].second;
+        hue = kHueVector[i - 1];
+        break;
+      }
     }
-    Node n(radius, coords,s, hue);  // creates a node for each streamer with random intial position
+    Node n(
+        radius, coords, s,
+        hue);  // creates a node for each streamer with random intial position
 
     nodes_.push_back(n);
   }
@@ -141,6 +144,37 @@ void GraphVisual::Arrange() {
   }
 }
 
+void GraphVisual::drawEdge(Node n1, Node n2, PNG& png) {
+  unsigned x1 = n1.center.first;
+  unsigned x2 = n2.center.first;
+  unsigned y1 = n1.center.second;
+  unsigned y2 = n2.center.second;
+
+  if ((x1 == 0 && y1 == 0) || (x2 == 0 && y2 == 0)) return;
+
+  if (x2 < x1) {
+    swap(x1, x2);
+    swap(y1, y2);
+  }
+
+  double slope = static_cast<double>(y2 - y1) / (x2 - x1);
+
+  for (unsigned x = x1; x < x2; x++) {
+    unsigned y = slope*(x - x1) + y1;
+    HSLAPixel& p = png.getPixel(x, y);
+    p.l = 0;
+  }
+}
+void GraphVisual::drawAllEdges(PNG& png) {
+  for (unsigned x = 0; x < adjMatrix_.size(); x++) {
+    for (unsigned y = 0; y < adjMatrix_[x].size(); y++) {
+      if (g_.isAdjacent(x, y) > 0) {
+        drawEdge(nodes_[x], nodes_[y], png);
+      }
+    }
+  }
+}
+
 void GraphVisual::drawNode(Node n, PNG& png) {
   unsigned rect_x1 = n.center.first - n.radius;
   unsigned rect_y1 = n.center.second - n.radius;
@@ -151,7 +185,7 @@ void GraphVisual::drawNode(Node n, PNG& png) {
     for (unsigned y = rect_y1; y < rect_y2; y++) {
       pair<unsigned, unsigned> curr = make_pair(x, y);
       double dist = utils::distance(curr, n.center);
-      if (dist <= n.radius) {
+      if (dist < n.radius) {
         HSLAPixel& p = png.getPixel(x, y);
         p.h = n.hue;
         p.s = 1;

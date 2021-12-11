@@ -7,7 +7,7 @@ using namespace std;
 /** Class representing a Graph of weighted Streamer nodes with weighted edges */
 class Graph {
  public:
-  static const unsigned kNumNodes = 7126;
+  static const unsigned kNumNodes = 7126; // Change this to the number of nodes in a dataset
 
   /** Empty default constructor */
   Graph();
