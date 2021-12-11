@@ -83,3 +83,36 @@ Note: Mostly caught up to former schedule!
 * Additional testing
 
 * Catch any bugs
+
+### Week of Dec 3 (cywang3)
+* Corrected BFS implementation
+
+* Created graph visualization class
+    * Added logic to draw the nodes in a png file
+        * Implemented framework for force calculations on nodes
+    * Created command line argument to create the visualization
+
+* Finished implementation of Dijkstra's Algorithmn
+    * Created test cases
+    
+* Merged similar files into one folder for sake of neatness
+
+* Documented and added comments for most classes
+
+* Added test cases for streamer class and BFS function
+
+* Created command line input for BFS
+    
+#### TODO this week:
+
+* Finish up test cases for all classes
+
+* Finish visualization class
+
+* Finish adding documentation
+
+* Squash those bugs!
+
+* Create two page report and video for presentation
+
+* Finish the semester on a high note :)
