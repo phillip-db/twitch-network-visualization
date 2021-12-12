@@ -7,7 +7,7 @@ OBJS = streamer.o CSVParser.o graph.o graph_visual.o utils.o main.o
 
 include cs225/make/cs225.mk
 
-CLEAN_RM += shortest_path test visualize bfs graph_vis.png graph_vis2.png
+CLEAN_RM += shortest_path test visualize bfs final_graph.png original_graph.png
 
 EXE2_OBJ = shortest_path.o
 
