@@ -142,6 +142,25 @@ void GraphVisual::Arrange() {
     }
     count++;
   }
+
+  int largest_negX = 0;
+  int largest_negY = 0;
+
+  for (unsigned i = 0; i < nodes_.size(); i++) {
+    if (nodes_[i].center.first < largest_negX) {
+      largest_negX = nodes_[i].center.first;
+    }
+
+    if (nodes_[i].center.second < largest_negY) {
+      largest_negY = nodes_[i].center.second; 
+    }
+  }
+
+  for (unsigned i = 0; i < nodes_size(); i++) {
+    nodes_[i].center.first -= largest_negX;
+    nodes[i].center.second -= largest_negY;
+  }
+
 }
 
 void GraphVisual::drawEdge(Node n1, Node n2, PNG& png) {
