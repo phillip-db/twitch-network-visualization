@@ -73,7 +73,7 @@ vector<string> Graph::BFS(unsigned source) {
     q.pop();
     visited[curr] = true;
 
-    // get i where adjMatrix[curr][i] == 1
+    // get i where adjMatrix[curr][i] != 0 
     // enqueue all the i's
 
     // weight, streamer id
@@ -85,7 +85,7 @@ vector<string> Graph::BFS(unsigned source) {
       }
     }
 
-    sort(adjacent.begin(), adjacent.end());
+    sort(adjacent.begin(), adjacent.end()); //sort by weight
 
     for (auto id : adjacent) {
       if (!visited[id.second]) {
