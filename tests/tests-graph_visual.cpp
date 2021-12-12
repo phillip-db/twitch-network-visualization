@@ -7,7 +7,7 @@
 
 using namespace std;
 
-TEST_CASE("Test arrange repulsion") {
+TEST_CASE("Test arrange repulsion", "[graph_visual]") {
   Streamer s1 = Streamer(0, "A", 1000000, 100, vector<unsigned>{});
   Streamer s2 = Streamer(1, "B", 1000000, 150, vector<unsigned>{});
 
@@ -30,7 +30,7 @@ TEST_CASE("Test arrange repulsion") {
   REQUIRE(finDist > ogDist);
 }
 
-TEST_CASE("Test arrange attraction") {
+TEST_CASE("Test arrange attraction", "[graph_visual]") {
   Streamer s1 = Streamer(0, "A", 1000000, 100, vector<unsigned>{1, 2, 3});
   Streamer s2 = Streamer(1, "B", 1000000, 150, vector<unsigned>{0, 2, 3});
   Streamer s3 = Streamer(2, "C", 1000000, 100, vector<unsigned>{0, 1, 3});

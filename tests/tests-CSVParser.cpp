@@ -8,7 +8,7 @@
 
 using namespace std;
 
-TEST_CASE("Creating Streamer Object") {
+TEST_CASE("Creating Streamer Object", "[CSVParser]") {
   CSVParser parser;
   string test = "0,73045350,1459,False,9528,False,2299,CaptainTeabeard";
   Streamer streamer;
@@ -17,7 +17,7 @@ TEST_CASE("Creating Streamer Object") {
   REQUIRE(streamer.getName().compare("CaptainTeabeard") == 0);
 }
 
-TEST_CASE("Testing file input") {
+TEST_CASE("Testing file input", "[CSVParser]") {
   ifstream input("data/test_data_friends.csv");
   string line = "";
   int count = 0;
@@ -27,7 +27,7 @@ TEST_CASE("Testing file input") {
   }
 }
 
-TEST_CASE("Parsing Friends File - Accessing File") {
+TEST_CASE("Parsing Friends File - Accessing File", "[CSVParser]") {
   CSVParser parser;
   parser.parseFriends("data/test_data_friends.csv");
   map<unsigned, vector<unsigned>> friendsMap;
@@ -36,7 +36,8 @@ TEST_CASE("Parsing Friends File - Accessing File") {
   REQUIRE(friendsMap.size() != 0);
 }
 
-TEST_CASE("Parsing Friends File - Correct # Elements in Each Vector") {
+TEST_CASE("Parsing Friends File - Correct # Elements in Each Vector",
+          "[CSVParser]") {
   CSVParser parser;
   parser.parseFriends("data/test_data_friends.csv");
   map<unsigned, vector<unsigned>> friendsMap;
@@ -48,7 +49,7 @@ TEST_CASE("Parsing Friends File - Correct # Elements in Each Vector") {
   REQUIRE(friendsMap.at(4470).size() == 9);
 }
 
-TEST_CASE("Parsing Friends File - Correct Elements in Vector") {
+TEST_CASE("Parsing Friends File - Correct Elements in Vector", "[CSVParser]") {
   CSVParser parser;
   parser.parseFriends("data/test_data_friends.csv");
   map<unsigned, vector<unsigned>> friendsMap;
@@ -58,7 +59,7 @@ TEST_CASE("Parsing Friends File - Correct Elements in Vector") {
   REQUIRE(friendsMap.at(2299)[1] == 1773);
 }
 
-TEST_CASE("Test parseFile") {
+TEST_CASE("Test parseFile", "[CSVParser]") {
   CSVParser parser;
   vector<Streamer> output;
   output = parser.parseFile("data/test_data_streamer_info.csv",

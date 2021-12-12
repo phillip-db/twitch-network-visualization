@@ -9,7 +9,7 @@ using namespace std;
 
 Graph g;
 
-TEST_CASE("Test graph initialization") {
+TEST_CASE("Test graph initialization", "[graph]") {
   CSVParser parser;
   vector<Streamer> output;
   output = parser.parseFile("data/test_graph_streamers.csv",
@@ -21,7 +21,7 @@ TEST_CASE("Test graph initialization") {
   REQUIRE(g.getNumStreamers() == numNodes);
 }
 
-TEST_CASE("Test edge list with invalid id") {
+TEST_CASE("Test edge list with invalid id", "[graph]") {
   REQUIRE(g.getEdges(10000).empty());
 }
 
@@ -34,40 +34,43 @@ TEST_CASE("Test edge list") {
   }
 }
 
-TEST_CASE("Test isAdjacent with invalid id") {
+TEST_CASE("Test isAdjacent with invalid id", "[graph]") {
   REQUIRE(!g.isAdjacent(10000, 0));
 }
 
-TEST_CASE("Test isAdjacent other nodes") {
+TEST_CASE("Test isAdjacent other nodes", "[graph]") {
   REQUIRE(g.isAdjacent(2299, 529));
   REQUIRE(!g.isAdjacent(2299, 0));
 }
 
-TEST_CASE("Test node is not adjacent to itself") {
+TEST_CASE("Test node is not adjacent to itself", "[graph]") {
   REQUIRE(!g.isAdjacent(2299, 2299));
 }
 
-TEST_CASE("Test edge weight with invalid id") {
+TEST_CASE("Test edge weight with invalid id", "[graph]") {
   REQUIRE(g.getEdgeWeight(10000, 0) == -1);
 }
 
-TEST_CASE("Test edge weight calculation") {
+TEST_CASE("Test edge weight calculation", "[graph]") {
   REQUIRE(g.getEdgeWeight(529, 2299) == 537);
 }
 
-TEST_CASE("Test node weight with invalid id") {
+TEST_CASE("Test node weight with invalid id", "[graph]") {
   REQUIRE(g.getNodeWeight(10000) == -1);
 }
 
-TEST_CASE("Dijkstra") {
+TEST_CASE("Dijkstra", "[graph]") {
   vector<string> valid_path = g.Dijkstra(2299, 529);
   vector<string> invalid_path = g.Dijkstra(2299, 0);
-  REQUIRE(valid_path[0] == "CaptainTeabeard");
-  REQUIRE(valid_path[1] == "EnderKate");
-  REQUIRE(invalid_path[0] == "No valid path.");
+  SECTION("Valid Path") {
+    REQUIRE(valid_path[0] == "CaptainTeabeard");
+    REQUIRE(valid_path[1] == "EnderKate");
+  }
+
+  SECTION("Invalid path") { REQUIRE(invalid_path[0] == "No valid path."); }
 }
 
-TEST_CASE("BFS") {
+TEST_CASE("BFS", "[graph]") {
   vector<string> traversal = g.BFS(2299);
   vector<string> expected = vector<string>(14);
   expected[0] = "CaptainTeabeard";
