@@ -10,6 +10,7 @@ using namespace cs225;
 using unit = double;
 using point = pair<unit, unit>;
 
+// namespace for point and force calculations
 namespace fdpoint {
 
 inline unit att(unit x, unit k) noexcept { return x * x / k; }
@@ -68,7 +69,8 @@ GraphVisual::GraphVisual(Graph graph, unsigned width, unsigned height,
   vector<Streamer> streamers = g_.getStreamers();
   nodes_ = vector<Node>(size);
 
-  // srand(time(NULL));
+  // srand(time(NULL)); // uncomment for random node placement between calls of
+  // ./visualize
   for (unsigned s = 0; s < size; s++) {
     int randX = rand() % (width + 1);
     int randY = rand() % (height + 1);
@@ -157,12 +159,13 @@ void GraphVisual::drawEdge(const Node& n1, const Node& n2, PNG& png) {
   int y1 = n1.center.second;
   int y2 = n2.center.second;
 
+  // Ensure that no Node is out of bounds
   if (x1 <= 0 || x2 <= 0 || x1 > static_cast<int>(width_) ||
       x2 > static_cast<int>(width_) || y1 <= 0 || y2 <= 0 ||
       y1 > static_cast<int>(height_) || y2 > static_cast<int>(height_))
     return;
 
-  if (x2 < x1) {
+  if (x2 < x1) {  // We want to draw left to right, so swap values if necessary
     swap(x1, x2);
     swap(y1, y2);
   }
@@ -174,6 +177,8 @@ void GraphVisual::drawEdge(const Node& n1, const Node& n2, PNG& png) {
   for (int x = x1; x < x2; x++) {
     int y = slope * (x - x1) + y1;
     int y_i = y_st;
+
+    // Drawing logic to ensure clean, full lines
     do {
       HSLAPixel& p = png.getPixel(x, y_i);
       p.l = 0;
@@ -205,6 +210,8 @@ void GraphVisual::drawNode(const Node& n, PNG& png) {
     for (int y = rect_y1; y < rect_y2; y++) {
       pair<int, int> curr = make_pair(x, y);
       double dist = utils::distance(curr, n.center);
+
+      // Only draw the Node if its center is in bounds
       if (dist < n.radius && x > 0 && x < static_cast<int>(width_) && y > 0 &&
           y < static_cast<int>(height_)) {
         HSLAPixel& p = png.getPixel(x, y);
