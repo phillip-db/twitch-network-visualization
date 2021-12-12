@@ -19,5 +19,5 @@ void printPath(vector<string> path);
  * @param p2 Second point.
  * @return cartesian distance between the points.
  */
-double distance(pair<unsigned, unsigned> p1, pair<unsigned, unsigned> p2);
+double distance(pair<int, int> p1, pair<int, int> p2);
 }  // namespace utils
