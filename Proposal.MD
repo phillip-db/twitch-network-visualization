@@ -4,7 +4,7 @@
 ### Leading Question
 One of our goals for the final project is to visualize connections between Twitch streamers. Using a force-directed graph algorithm, we will assign weights to nodes and edges and generate a visually appealing graph that highlights the biggest and most connected streamers. More popular, connected streamers will be at the center of the graph while the less popular, connected streamers will be at the edges.
 
-We would also have a method that provides users with information on how two streamers are connected through a series of mutually following streamers on the shortest path, using Djiktra’s Shortest path. This would allow a user to see if any two given streamers have a connection and belong in the same “network.”
+We would also have a method that provides users with information on how two streamers are connected through a series of mutually following streamers on the shortest path, using Dijkstra’s Shortest path. This would allow a user to see if any two given streamers have a connection and belong in the same “network.”
 
 ### Dataset Acquisition and Processing: 
 The dataset we’ve chosen is Twitch Games Social Network from Stanford data sets. The nodes represent Twitch users and the edges represent mutual follower relationships between the Twitch users. 
