@@ -1,13 +1,20 @@
 #include <iostream>
 #include "CSVParser.h"
-#include "graph.h"
-#include "graph_visual.h"
 #include "cs225/HSLAPixel.h"
 #include "cs225/PNG.h"
-
+#include "graph.h"
+#include "graph_visual.h"
 
 using namespace std;
-int main() {
+int main(int argc, char* argv[]) {
+  if (argc != 4) {
+    cout << "Incorrect number of arguments (need 3)." << endl;
+    return 0;
+  }
+
+  int arg1 = stoi(argv[1]);
+  int arg2 = stoi(argv[2]);
+  int arg3 = stoi(argv[3]);
 
   CSVParser parser;
   vector<Streamer> output;
@@ -17,36 +24,14 @@ int main() {
   int numNodes = Graph::kNumNodes;
 
   g = Graph(output, numNodes);
+  GraphVisual gv = GraphVisual(g, arg1, arg1, arg2, arg3);
 
-  GraphVisual gv = GraphVisual(g, 8000, 8000);
-  
-  PNG* png = new PNG(8000, 8000);
-
-  vector<GraphVisual::Node> nodes = gv.getNodes();
-
-  gv.drawAllEdges(*png);
-
-  for(unsigned i = 0; i < nodes.size(); i++) {
-    if (nodes[i].center.first > 0 && nodes[i].center.second > 0) {
-      gv.drawNode(nodes[i], *png);
-    }
-  }
-
-  png->writeToFile("graph_visual1.png");
+  PNG* original = new PNG(arg1, arg1);
+  gv.drawGraph(*original);
+  original->writeToFile("original_graph.png");
 
   gv.Arrange();
-
-  nodes = gv.getNodes();
-
-  PNG* png2 = new PNG(8000, 8000);
-
-  gv.drawAllEdges(*png2);
-
-  for(unsigned i = 0; i < nodes.size(); i++) {
-    if (nodes[i].center.first > 0 && nodes[i].center.second > 0) {
-      gv.drawNode(nodes[i], *png2);
-    }
-  }
-
-  png2->writeToFile("graph_vis2.png");
+  PNG* final = new PNG(arg1, arg1);
+  gv.drawGraph(*final);
+  final->writeToFile("final_graph.png");
 }
