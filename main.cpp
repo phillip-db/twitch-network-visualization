@@ -18,25 +18,13 @@ int main() {
 
   g = Graph(output, numNodes);
 
-  GraphVisual gv = GraphVisual(g, 8000, 8000);
+  GraphVisual gv = GraphVisual(g, 500, 500);
   
-  PNG* png = new PNG(8080, 8080);
+  PNG* png = new PNG(580, 580);
 
   vector<GraphVisual::Node> nodes = gv.getNodes();
 
-  /* for(unsigned i = 0; i < nodes.size(); i++) {
-    if (nodes[i].center.first > 0 && nodes[i].center.second > 0) {
-      gv.drawNode(nodes[i], *png);
-    }
-  }
-
-  png->writeToFile("graph_visual1.png"); */
-
-  gv.Arrange();
-
-  nodes = gv.getNodes();
-
-  gv.drawAllEdges(*png);
+  // gv.drawAllEdges(*png);
 
   for(unsigned i = 0; i < nodes.size(); i++) {
     if (nodes[i].center.first > 0 && nodes[i].center.second > 0) {
@@ -44,5 +32,21 @@ int main() {
     }
   }
 
-  png->writeToFile("graph_vis2.png");
+  png->writeToFile("graph_visual1.png"); 
+
+  gv.Arrange();
+
+  nodes = gv.getNodes();
+
+  PNG* png2 = new PNG(580, 580);
+
+  // gv.drawAllEdges(*png2);
+
+  for(unsigned i = 0; i < nodes.size(); i++) {
+    if (nodes[i].center.first > 0 && nodes[i].center.second > 0) {
+      gv.drawNode(nodes[i], *png2);
+    }
+  }
+
+  png2->writeToFile("graph_vis2.png");
 }

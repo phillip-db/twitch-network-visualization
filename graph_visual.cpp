@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cmath>
 #include "utils.h"
+#include <time.h>
 
 using namespace std;
 using namespace cs225;
@@ -16,11 +17,13 @@ GraphVisual::GraphVisual(Graph graph, unsigned width, unsigned height) {
   height_ = height;
 
   vector<Streamer> streamers = g_.getStreamers();
+  nodes_ = vector<Node>(5);
 
-  for (Streamer s : streamers) {
-    unsigned randX = rand() % (width + 1);
-    unsigned randY = rand() % (height + 1);
-    pair<unsigned, unsigned> coords = make_pair(randX, randY);
+  srand(time(NULL));
+  for (unsigned s = 0; s < 5; s++) {
+    int randX = rand() % (width + 1);
+    int randY = rand() % (height + 1);
+    pair<int, int> coords = make_pair(randX, randY);
 
     // modify this for size of node, viewers = e^radius - 1
     unsigned radius = kRadiusGrouping[kRadiusGrouping.size() - 1].second;
@@ -29,27 +32,27 @@ GraphVisual::GraphVisual(Graph graph, unsigned width, unsigned height) {
     // kShift; 2 * log(min(s.getViews(), kClipValue) + 1);  // standardizes
     // radius based on range of views */
     for (unsigned i = 1; i < kRadiusGrouping.size(); i++) {
-      if (s.getViews() < kRadiusGrouping[i].first) {
+      if (streamers[s].getViews() < kRadiusGrouping[i].first) {
         radius = kRadiusGrouping[i - 1].second;
         hue = kHueVector[i - 1];
         break;
       }
     }
     Node n(
-        radius, coords, s,
+        radius, coords, streamers[s],
         hue);  // creates a node for each streamer with random intial position
 
-    nodes_.push_back(n);
+    nodes_[s] = n;
   }
 
   adjMatrix_ = g_.getAdjMatrix();
 
   forceConst_ =
-      kAreaConst * (sqrt((width_ * height_) / g_.getStreamers().size()));
+      kAreaConst * (sqrt((width_ * height_) / nodes_.size()));
 }
 
-float GraphVisual::CalcAngle(pair<unsigned, unsigned> thisPoint,
-                             pair<unsigned, unsigned> otherPoint) {
+float GraphVisual::CalcAngle(pair<int, int> thisPoint,
+                             pair<int, int> otherPoint) {
   int delX = thisPoint.first - otherPoint.first;
   int delY = thisPoint.second - otherPoint.second;
 
@@ -64,7 +67,7 @@ pair<double, double> GraphVisual::CalcComponents(double force, float angleDeg) {
 
   return make_pair(xComp, yComp);
 }
-double GraphVisual::CalcDistance(Node n1, Node n2) {
+double GraphVisual::CalcDistance(const Node& n1, const Node& n2) {
   unsigned x = n1.center.first - n2.center.first;
   unsigned y = n1.center.second - n2.center.second;
 
@@ -73,10 +76,10 @@ double GraphVisual::CalcDistance(Node n1, Node n2) {
   return dist;
 }
 
-pair<double, double> GraphVisual::CalcAttractionForce(Node n1, Node n2) {
+pair<double, double> GraphVisual::CalcAttractionForce(const Node& n1, const Node& n2) {
   double distance = CalcDistance(n1, n2);
 
-  double a_force = pow(distance, 2) / forceConst_;
+  double a_force = kAttractConst * max(distance - kSpringDist, 0.0);
 
   float angle = CalcAngle(n1.center, n2.center);
 
@@ -85,10 +88,10 @@ pair<double, double> GraphVisual::CalcAttractionForce(Node n1, Node n2) {
   return components;
 }
 
-pair<double, double> GraphVisual::CalcRepulsionForce(Node n1, Node n2) {
+pair<double, double> GraphVisual::CalcRepulsionForce(const Node& n1, const Node& n2) {
   double distance = CalcDistance(n1, n2);
 
-  double a_force = -1 * pow(forceConst_, 2) / distance;
+  double a_force = -1 * (kRepConst / pow(distance, 2));
 
   float angle = CalcAngle(n1.center, n2.center);
 
@@ -98,53 +101,52 @@ pair<double, double> GraphVisual::CalcRepulsionForce(Node n1, Node n2) {
 }
 
 void GraphVisual::Arrange() {
-  unsigned count = 0;
-  double sumDisplacement = INT_MAX;
-  while (count < kMaxIterations && sumDisplacement > KDisplaceThreshold) {
-    sumDisplacement = 0;
-    vector<pair<double, double>> nodeVelocities;
+  int stopCount = 0;
+  unsigned iters = 0;
+  while(true) {
+    double totalDisplacement = 0;
+
     for (unsigned i = 0; i < nodes_.size(); i++) {
-      vector<pair<double, double>> netForce;
+      pair<int, int> currentPos = nodes_[i].center;
+      pair<double, double> netForce = make_pair(0, 0);
+
       for (unsigned j = 0; j < nodes_.size(); j++) {
-        if (i != j) {
-          netForce.push_back(CalcRepulsionForce(nodes_[i], nodes_[j]));
-        }
-        if (adjMatrix_[nodes_[i].streamer.getId()][nodes_[i].streamer.getId()] >
-            0) {
-          netForce.push_back(CalcAttractionForce(nodes_[i], nodes_[j]));
+        if (j != i) {
+          pair<double, double> repForce = CalcRepulsionForce(nodes_[i], nodes_[j]);
+          netForce.first += repForce.first;
+          netForce.second += repForce.second;
         }
       }
-      double xNet = 0;
-      double yNet = 0;
-      for (pair<double, double> p : netForce) {  // sum up the net force
-        xNet += p.first;
-        yNet += p.second;
+
+      for (unsigned j : nodes_[i].streamer.getFriends()) {
+        if (j < nodes_.size() && adjMatrix_[i][j] > 0) {
+          pair<double, double> attrForce = CalcAttractionForce(nodes_[i], nodes_[j]);
+          netForce.first += attrForce.first;
+          netForce.second += attrForce.second;
+        }
       }
 
-      nodeVelocities.push_back(make_pair(xNet, yNet));
-    }
-    for (unsigned v = 0; v < nodeVelocities.size(); v++) {
-      if (nodeVelocities[v].first < 0) {
-        nodes_[v].center.first -= nodeVelocities[v].first;
-      } else {
-        nodes_[v].center.first += nodeVelocities[v].first;
-      }
-
-      if (nodeVelocities[v].second < 0) {
-        nodes_[v].center.second -= nodeVelocities[v].second;
-      } else {
-        nodes_[v].center.second += nodeVelocities[v].second;
-      }
+      nodes_[i].velocity.first *= kDamping;
+      nodes_[i].velocity.second *= kDamping;
+      nodes_[i].nextCenter.first += nodes_[i].velocity.first;
+      nodes_[i].nextCenter.second += nodes_[i].velocity.second;
     }
 
-    for (pair<double, double> p : nodeVelocities) {
-      sumDisplacement += sqrt(pow(p.first, 2) + pow(p.second, 2));
+    for (unsigned i = 0; i < nodes_.size(); i++) {
+      int xDif = nodes_[i].nextCenter.first - nodes_[i].center.first;
+      int yDif = nodes_[i].nextCenter.second - nodes_[i].center.second;
+      totalDisplacement += sqrt(pow(xDif, 2) + pow(yDif, 2));
+      nodes_[i].center = nodes_[i].nextCenter;
     }
-    count++;
+
+    iters++;
+    if (totalDisplacement < KDisplaceThreshold) stopCount++;
+    if (stopCount > 3) break;
+    if (iters > kMaxIterations) break;
   }
 }
 
-void GraphVisual::drawEdge(Node n1, Node n2, PNG& png) {
+void GraphVisual::drawEdge(const Node& n1, const Node& n2, PNG& png) {
   unsigned x1 = n1.center.first;
   unsigned x2 = n2.center.first;
   unsigned y1 = n1.center.second;
@@ -166,8 +168,8 @@ void GraphVisual::drawEdge(Node n1, Node n2, PNG& png) {
   }
 }
 void GraphVisual::drawAllEdges(PNG& png) {
-  for (unsigned x = 0; x < adjMatrix_.size(); x++) {
-    for (unsigned y = 0; y < adjMatrix_[x].size(); y++) {
+  for (unsigned x = 0; x < nodes_.size(); x++) {
+    for (unsigned y = 0; y < nodes_.size(); y++) {
       if (g_.isAdjacent(x, y) > 0) {
         drawEdge(nodes_[x], nodes_[y], png);
       }
@@ -175,7 +177,7 @@ void GraphVisual::drawAllEdges(PNG& png) {
   }
 }
 
-void GraphVisual::drawNode(Node n, PNG& png) {
+void GraphVisual::drawNode(const Node& n, PNG& png) {
   unsigned rect_x1 = n.center.first - n.radius;
   unsigned rect_y1 = n.center.second - n.radius;
   unsigned rect_x2 = n.center.first + n.radius;
