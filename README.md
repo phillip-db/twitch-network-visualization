@@ -10,7 +10,7 @@ The python script we used to clean the data and alter the data to a desired form
 
 Images used in our report are contained in the images folder.
 
-### Video Presentation Link: [insert link here]
+### Video Presentation Link: https://youtu.be/_AHaBpHF1QM
 \
 &nbsp;
 
