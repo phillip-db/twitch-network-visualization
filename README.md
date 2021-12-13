@@ -10,6 +10,14 @@ The python script we used to clean the data and alter the data to a desired form
 
 Images used in our report are contained in the images folder.
 
+In order to use another set of data, two files are needed:
+1. csv of streamer data formatted as:
+	- index,TwitchID,age_in_days,has_mature_content,views,is_twitch_partner,convertedId,Twitch_username
+2. csv of edge data formatted as:
+	- convertedId,convertedId
+
+In each of the main.cpp, shortest_path.cpp, and bfs.cpp files replace the existing paths to the included streamer data and edge data files with paths to the new streamer data and edge data files.
+
 ### Video Presentation Link: https://youtu.be/_AHaBpHF1QM
 \
 &nbsp;
@@ -23,7 +31,7 @@ The Twitch Streamer datasets are located in the data folder.
 The modified English target data set contains the streamer data in the following format:
 > index, TwitchID, age in days, mature content, views, twitch partner, convertedId, Twitch username
 
-All code pertaining to the parsing of the data set is located in the CSVParser class. The parser class parses the node CSV and edge CSV files and constructs Streamer objects, storing all created Streamers into a vector that is then returned
+All code pertaining to the parsing of the data set is located in the CSVParser class. The parser class parses the node CSV and edge CSV files and constructs Streamer objects, storing all created Streamers into a vector that is then returned.
 
 \
 &nbsp;
