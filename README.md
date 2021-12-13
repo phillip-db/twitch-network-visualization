@@ -31,7 +31,7 @@ The graph class contains code for the **BFS** and **Dijkstra's** shortest path a
 >NOTE: Streamer names are case sensitive
 
 ### Testing the Code
- All tests pertaining to the classes are in the test folder. We have created separate test files for the four major source files involved in the project. Generally, our tests involve testing the major methods contained in our code, and private helper methods are tested by using publicly available methods. We compare results produced from our code to hard-coded, expected results that we have calculated ourselves. For trivial methods such as getters and setters, we generally refrained from create test cases. Utils also only contains a trivial distance calculation method and method that prints to console, so we decided not to implement utils tests to our testing suite.
+All tests pertaining to the classes are in the test folder. We have created separate test files for the four major source files involved in the project. Generally, our tests involve testing the major methods contained in our code, and private helper methods are tested by using publicly available methods. We compare results produced from our code to hard-coded, expected results that we have calculated ourselves. For trivial methods such as getters and setters, we generally refrained from create test cases. Utils also only contains a trivial distance calculation method and method that prints to console, so we decided not to implement utils tests to our testing suite. We also used subsets of our data for some test cases, and the subset csvs are located in the data folder.
  
 ####  To compile tests:
 	make test
