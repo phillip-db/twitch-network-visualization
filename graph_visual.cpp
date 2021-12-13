@@ -13,10 +13,34 @@ using point = pair<unit, unit>;
 // namespace for point and force calculations
 namespace fdpoint {
 
+/**
+ * Calculates the attraction force
+ * 
+ * @param x distance
+ * @param k force constant
+ *
+ * @return the value of the attraction force
+ */
 inline unit att(unit x, unit k) noexcept { return x * x / k; }
 
+/**
+ * Calculates the repulsion force
+ * 
+ * @param x distance
+ * @param k force constant
+ *
+ * @return the value of the repulsion force
+ */
 inline unit rep(unit x, unit k) noexcept { return k * k / x; }
 
+
+/**
+ * Calculates the magnitude of force
+ * 
+ * @param p point to take norm of
+ *
+ * @return the value of the norm
+ */
 inline unit norm(point const& p) noexcept {
   return sqrt(p.first * p.first + p.second * p.second);
 }

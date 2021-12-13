@@ -53,12 +53,23 @@ Thus, we were able to successfully complete this deliverable with a faster runti
 
 Another aspect of our visual implementation is that it entirely omits nodes that are not as strongly connected to the biggest most connected streamers in the subset of data we are utilizing. This aligns perfectly with our goal to "generate a visually appealing graph that highlights the biggest and most connected streamers."
 
+You can see from these images that a lot of the smaller connected components that aren't tied to the main connected component in this visualization of 1000 streamers are omitted from the final graph drawing. This refines the visual to show the relevant information pertaining to the strongest connected and largest network of Twitch streamers that existed within the subset of data utilized to draw this graph.
+
+If we were to run more iterations of the algorithm, the graph will continue to spread out and reach a better visual representation of the data. However, this also expands the range of the relevant data beyond the boundaries of the image making actually seeing the data difficult.
+
+The images below were our final output when using a specific set of variables passed as parameters to our draw function. These parameters are as follows: an image size  = 8000 pixels, number of streamers = 1000, number of algorithm iterations = 85.
+
 #### Original graph before modified Fruchterman-Reingold is applied:
-![](/images/original_graph.png)
+![](/images/original_graph_saved.png)
+
+\
+&nbsp;
+\
+&nbsp;
 
 #### Final graph after modified Fruchterman-Reingold is applied:
 
-![](/images/final_graph.png)
+![](/images/final_graph_saved.png)
 
 
 ##  
