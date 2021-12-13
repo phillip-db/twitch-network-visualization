@@ -1,104 +1,71 @@
-# CS 225 Final Project Fall 2021 - cywang3-pburle2-spate562-jamatz2
+#  Twitch Streamer Network Visualization and Analysis
+### CS 225 Final Project Fall 2021 (cywang3-pburle2-spate562-jamatz2)
+
+## About the Project
+This project seeks to visualize the connections between various Twitch streamers, and investigate whether or not we are able to discern "networks" of multiple streamers. Three main algorithms we implemented are Breadth-First Search, Dijkstra's Shortest Path, and an adaptation of the Fruchterman-Reingold force-directed graph. 
+
+The code we developed for the project is contained within the base directory. We imported the Catch testing library and existing CS225 code from previous MPs and labs; the code is contained in the respective catch and cs225 folders. Objects and dependencies are stored inside the .objs folder and are not committed to the repository.
+
+The python script we used to clean the data and alter the data to a desired format is in the **main.py** file in the base directory.
+
+Images used in our report are contained in the images folder.
+
+### Video Presentation Link: [insert link here]
+\
+&nbsp;
 
 
-## Data: 
-
-The twitch streamer datasets are located in the data folder.
-
-The modifed english target data set contains is comma-delimited in this order: 
->index, TwitchID, age in days, mature content, views, twitch partner, convertedId, Twitch Username 
-
-## Tests:
-All tests pertaining to the classes are in the test folder. 
-
-- CSVParser tests are located in tests-CSVParser.cpp
-- graph_visual tests are located in tests-graph_visual.cpp
-- graph tests are located in tests-graph.cpp
-- Streamer tests are located in tests-streamer.cpp
-
-## Code:
-
-The **CSVParser** class contains all code pertaining to the parsing of the initial data set from a CSV.
-
-The **Graph** class contains code for the BFS and Dijkstra's shortest path algorithms. This class also constructs the adjacency matrix that we use to analyze our vertices and edges.
-
-The **utils** class has the logic for calculating distances between two nodes as well as printing the path for two nodes.
-
-
-The **graph_visual** class has the logic for the force-directed arrangement of our nodes. It also has the method for drawing all nodes and edges. The arrange method of this class uses several other methods and operator overloads located within in the fdpoint namespace within this class.
-
-The **Streamer** class has the code for creating our custom Streamer object. This object stores all the attributes belonging to a streamer that we take from our dataset.
-
-**Main.py** contains the code we used in conjuction with the Twitch API to preprocess our data as well as add additonal data such as the usernames of the Twitch Streamers.
-
-## Modifying Data Input:
-
-You can go into the main.cpp file and change the filepaths that are passed into the parser.parseFile() method in order to change the data. The first filepath is the CSV representing the information of each streamer. The second filepath is a CSV representing the edge connection between each node, represented by line with the first and second value in each line representing the id of two nodes that share an edge. The id's correspond to the convertedId that is present in the first file.
+## CSV Parsing, Streamer (Node) and Friend (Edge) Data
 
 ---
 
-## To run BFS:
+The Twitch Streamer datasets are located in the data folder. 
+The modified English target data set contains the streamer data in the following format:
+> index, TwitchID, age in days, mature content, views, twitch partner, convertedId, Twitch username
 
-**Input:** A number representing the id of the streamer where you want to begin the BFS
+All code pertaining to the parsing of the data set is located in the CSVParser class. The parser class parses the node CSV and edge CSV files and constructs Streamer objects, storing all created Streamers into a vector that is then returned
 
-```
-make bfs && ./bfs <start_id>
-```
+\
+&nbsp;
 
-**Output:** Outputs entire BFS traversal to terminal as a string
 
----
-
-## To run Dijkstra's: 
-
-**Input:** Two strings representing the streamers names, one for the *start streamer* and the other for *end streamer*
-
-**NOTE:** Streamer names are case sensitive
-
-```
-make shortest_path && ./shortest_path <start_name> <end_name> 
-```
-
-**Output:** Outputs string of shortest path names to terminal
+## Graph Visualization
 
 ---
 
-## To create visualization:
+Logic for drawing all nodes and edges are in the graph_visual class, based on the **Fruchterman-Reingold** algorithm in structuring the shape of our dataset for repulsive and attractive forces. Graph images will be output to **original_graph.png** and **final_graph.png** in the base directory
+#### To compile and create output graph images:
+	make && ./visualize <image_dimensions> <num_streamers> <num_iterations>
+>For the included dataset, we found that the arguments **8000**, **1000**, and **85** for **<image_dimensions>**, **<num_streamers>**, and **<num_iterations>** respectively create a visually-appealing graph that is representative of the entire dataset due to the nature of the Streamer data CSV already being in random order.
 
-**Input:** 
-1. The size of the image in pixels
-2. The number of streamers to visualize initially
-3. The number of times to run the positioning algorithm
-
->**Note**: When testing our code, we came to an optimal set of parameters that best demonstrated our code and is the most visually pleasing. These parameters will generate the initial and final images within our images folder as well as those included in Results.MD
-
->These parameters are: size = 8000, streamers = 1000, iterations = 85
+\
+&nbsp;
 
 
-
-```
-make && ./visualize <image_dimensions> <num_streamers> <num_iterations>
-```
-
-**NOTE:** Takes up to a minute to run.
-
-**Output:** Outputs images to main directory as **"original_graph.png"** and **"final_graph.png"**
+## BFS and Dijkstra's Shortest Path, Utils
 
 ---
 
-## To run tests:
-```
-make test
-```
-  * To run all tests:
-      ```
-      ./test test
-      ```
-  * To run only graph tests:
-      ```
-      ./test [Graph]
-      ```
-  * To run only visual test:
-      ```
-      ./test [visual]
-      ```
+The graph class contains code for the **BFS** and **Dijkstra's** shortest path algorithms. The logic for calculating distances between two nodes as well as printing the path for two nodes is in the utils class. The BFS traversal is print in order to the console along with the number of nodes in that connected component. The shortest path from one streamer to another is printed to the console in the order from beginning to end.
+#### To compile and run BFS:
+    make bfs && ./bfs <start_id>
+#### To compile and run Dijkstra:
+	make shortest_path && ./shortest_path <start_name> <end_name>
+>NOTE: Streamer names are case sensitive
+
+\
+&nbsp;
+
+## Testing the Code
+
+---
+
+All tests pertaining to the classes are in the test folder. We have created separate test files for the four major source files involved in the project. Generally, our tests involve testing the major methods contained in our code, and private helper methods are tested by using publicly available methods. We compare results produced from our code to hard-coded, expected results that we have calculated ourselves. For trivial methods such as getters and setters, we generally refrained from create test cases. Utils also only contains a trivial distance calculation method and method that prints to console, so we decided not to implement utils tests to our testing suite. We also used subsets of our data for some test cases, and the subset CSVs are located in the data folder.
+ 
+####  To compile tests:
+	make test
+#### To run all tests:
+	./test
+#### To run tests for specific classes:
+	./test [class_name]
+>Keep the square brackets and replace class_name with one of the following: graph, graph_visual, streamer, CSVParser
