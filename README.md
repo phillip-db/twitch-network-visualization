@@ -1,8 +1,7 @@
 #  Twitch Streamer Network Visualization and Analysis
-### CS 225 Final Project Fall 2021 (cywang3-pburle2-spate562-jamatz2)
 
 ## About the Project
-This project seeks to visualize the connections between various Twitch streamers, and investigate whether or not we are able to discern "networks" of multiple streamers. Three main algorithms we implemented are Breadth-First Search, Dijkstra's Shortest Path, and an adaptation of the Fruchterman-Reingold force-directed graph. 
+This collaborative project seeks to visualize the connections between various Twitch streamers, and investigate whether or not we are able to discern "networks" of multiple streamers. Three main algorithms we implemented are Breadth-First Search, Dijkstra's Shortest Path, and an adaptation of the Fruchterman-Reingold force-directed graph. 
 
 The code we developed for the project is contained within the base directory. We imported the Catch testing library and existing CS225 code from previous MPs and labs; the code is contained in the respective catch and cs225 folders. Objects and dependencies are stored inside the .objs folder and are not committed to the repository.
 
