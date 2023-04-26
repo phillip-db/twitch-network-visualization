@@ -1,5 +1,7 @@
 #  Twitch Streamer Network Visualization and Analysis
 
+![image](https://user-images.githubusercontent.com/70783501/234671041-28557459-8168-47a9-a935-c75dfee31fb9.png)
+
 ## About the Project
 This collaborative project seeks to visualize the connections between various Twitch streamers, and investigate whether or not we are able to discern "networks" of multiple streamers. Three main algorithms we implemented are Breadth-First Search, Dijkstra's Shortest Path, and an adaptation of the Fruchterman-Reingold force-directed graph. 
 
